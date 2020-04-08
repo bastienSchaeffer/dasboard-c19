@@ -1,34 +1,31 @@
-import express, {Request, Response, NextFunction} from 'express';
+import express, {Request, Response} from 'express';
 import next from 'next';
+import {PORT} from './config/ports';
+
+import routesConfig from './config/routes';
+import {covidTimeSeriesAPIData} from './config/retrieveRedis';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({dev});
 const handle = app.getRequestHandler();
-const port = process.env.PORT || 3000;
+const server = express();
 
-(async () => {
-  try {
-    await app.prepare();
-    const server = express();
+app.prepare();
 
-    server.get('/url', (req: Request, res: Response, next: NextFunction) => {
-      console.log(req, next);
-      res.json({
-        origin: 'express server',
-        data: 'dummy data',
-        date: Date.now(),
-      });
-    });
+// Routes: GET / POST
+routesConfig(server);
 
-    server.all('*', (req: Request, res: Response) => {
-      return handle(req, res);
-    });
-    server.listen(port, (err?: any) => {
-      if (err) throw err;
-      console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);
-    });
-  } catch (e) {
-    console.error(e);
-    process.exit(1);
-  }
-})();
+// Populate from External CovidAPI
+covidTimeSeriesAPIData();
+setInterval(covidTimeSeriesAPIData, 600000);
+
+server.all('*', (req: Request, res: Response) => {
+  return handle(req, res);
+});
+
+server.listen(PORT, (err?: any) => {
+  if (err) throw err;
+  console.log(`> Ready on localhost:${PORT} - env ${process.env.NODE_ENV}`);
+});
+
+export {server};
