@@ -13,48 +13,51 @@ export default (app: Application) => {
   // Retrieved from API on REDIS
   // -------------------------------
 
-  app.get(
-    '/timeseries',
-    (_req: Request, res: Response, _next: NextFunction) => {
-      return clientRedis.get('timeseries', (err: Errback, result: any) => {
-        if (err) throw err;
-        // If that key exist in Redis store
-        if (result) {
-          return res.status(200).json(JSON.parse(result));
-        } else {
-          res.status(500);
-        }
-      });
-    }
-  );
+  app.get('/world', (_req: Request, res: Response, _next: NextFunction) => {
+    return clientRedis.get('world', (err: Errback, result: any) => {
+      if (err) throw err;
+      // If that key exist in Redis store
+      if (result) {
+        return res.status(200).json(JSON.parse(result));
+      } else {
+        res.status(500);
+      }
+    });
+  });
 
-  app.get(
-    '/latestCountries',
-    (_req: Request, res: Response, _next: NextFunction) => {
-      return clientRedis.get('latestCountries', (err: Errback, result: any) => {
-        if (err) throw err;
-        // If that key exist in Redis store
-        if (result) {
-          return res.status(200).json(JSON.parse(result));
-        } else {
-          res.status(500);
-        }
-      });
-    }
-  );
+  app.get('/countries', (_req: Request, res: Response, _next: NextFunction) => {
+    return clientRedis.get('countries', (err: Errback, result: any) => {
+      if (err) throw err;
+      // If that key exist in Redis store
+      if (result) {
+        return res.status(200).json(JSON.parse(result));
+      } else {
+        res.status(500);
+      }
+    });
+  });
 
-  app.get(
-    '/dummyRedis',
-    (_req: Request, res: Response, _next: NextFunction) => {
-      return clientRedis.get('dummyRedis', (err: Errback, result: any) => {
-        if (err) throw err;
+  app.get('/timeline', (_req: Request, res: Response, _next: NextFunction) => {
+    return clientRedis.get('timeline', (err: Errback, result: any) => {
+      if (err) throw err;
+      // If that key exist in Redis store
+      if (result) {
+        return res.status(200).json(JSON.parse(result));
+      } else {
+        res.status(500);
+      }
+    });
+  });
 
-        if (result) {
-          return res.status(200).json(JSON.parse(result));
-        } else {
-          res.status(500);
-        }
-      });
-    }
-  );
+  app.get('/health', (_req: Request, res: Response, _next: NextFunction) => {
+    return clientRedis.get('health', (err: Errback, result: any) => {
+      if (err) throw err;
+
+      if (result) {
+        return res.status(200).json(JSON.parse(result));
+      } else {
+        res.status(500);
+      }
+    });
+  });
 };

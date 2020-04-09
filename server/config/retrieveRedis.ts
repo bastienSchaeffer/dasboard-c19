@@ -1,39 +1,45 @@
 import clientRedis from './redis';
 import axios from 'axios';
 
-const extractLatestCountries = (data: any) => {
-  const filtered = Object.keys(data)
-    .map((country) => {
-      const dayData = data[country][data[country].length - 1];
-      return {
-        country: country,
-        ...dayData,
-      };
-    })
-    .sort((a, b) => b.confirmed - a.confirmed);
+const getWorld = async () => {
+  let res = await axios.get('http://api.coronastatistics.live/all');
+  let {data} = await res;
+  clientRedis.set('world', JSON.stringify(data));
+  console.log(`==> World retrieved`);
+};
 
-  clientRedis.set('timeseries', JSON.stringify(data));
-  clientRedis.set('latestCountries', JSON.stringify(filtered));
+const getCountries = async () => {
+  let res = await axios.get('http://api.coronastatistics.live/countries');
+  let {data} = await res;
   clientRedis.set(
-    'dummyRedis',
+    'countries',
+    JSON.stringify(data.sort((a: any, b: any) => b.cases - a.cases))
+  );
+  console.log(`==> Countries retrieved`);
+};
+
+const getTimeline = async () => {
+  let res = await axios.get('https://pomber.github.io/covid19/timeseries.json');
+  let {data} = await res;
+  clientRedis.set('timeline', JSON.stringify(data));
+  console.log(`==> Timeline retrieved`);
+};
+
+const setHealth = () => {
+  clientRedis.set(
+    'health',
     JSON.stringify({
       origin: 'redis',
       date: new Date(),
     })
   );
-
-  console.log(`ALL REDIS SETUP: ${new Date()}`);
 };
-
 const covidTimeSeriesAPIData = async () => {
-  try {
-    axios
-      .get('https://pomber.github.io/covid19/timeseries.json')
-      .then((response) => extractLatestCountries(response.data));
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
+  getWorld();
+  getCountries();
+  getTimeline();
+  setHealth();
+  console.log('=-=-=-=-=-=-=- Latest global: ${new Date()}');
 };
 
 export {covidTimeSeriesAPIData};

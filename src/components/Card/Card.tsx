@@ -7,7 +7,7 @@ import {
   Typography,
   Avatar,
 } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+// import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import Autorenew from '@material-ui/icons/Autorenew';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   avatar: {
     backgroundColor: theme.palette.info.main,
-    height: 56,
-    width: 56,
+    height: 28,
+    width: 28,
   },
   icon: {
-    height: 32,
-    width: 32,
+    height: 16,
+    width: 16,
   },
   difference: {
     marginTop: theme.spacing(2),
@@ -44,7 +44,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Card = () => {
+type CardProps = {
+  title: string;
+  number: number;
+};
+
+const Card: React.FC<CardProps> = ({title, number}) => {
   const classes = useStyles();
 
   return (
@@ -52,15 +57,15 @@ const Card = () => {
       <CardContent>
         <Grid container justify='space-between'>
           <Grid item>
+            <Typography variant='h3'>{title}</Typography>
             <Typography
               className={classes.title}
               color='textSecondary'
               gutterBottom
-              variant='body2'
+              variant='caption'
             >
-              CARD
+              WORLDWIDE
             </Typography>
-            <Typography variant='h3'>Title Card</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
@@ -69,11 +74,11 @@ const Card = () => {
           </Grid>
         </Grid>
         <div className={classes.difference}>
-          <ArrowDownwardIcon className={classes.differenceIcon} />
-          <Typography className={classes.differenceValue} variant='body2'>
-            12%
+          {/* <ArrowDownwardIcon className={classes.differenceIcon} /> */}
+          <Typography className={classes.differenceValue} variant='h1'>
+            {number}
           </Typography>
-          <Typography variant='caption'>Since last month</Typography>
+          <Typography variant='caption'>Since 1 / 22 / 2020</Typography>
         </div>
       </CardContent>
     </CardMUI>

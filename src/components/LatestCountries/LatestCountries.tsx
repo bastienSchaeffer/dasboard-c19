@@ -65,7 +65,7 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({countries}) => {
               <TableHead>
                 <TableRow>
                   <TableCell>Country</TableCell>
-                  <TableCell>Confirmed</TableCell>
+                  <TableCell>Cases</TableCell>
                   <TableCell>Deaths</TableCell>
                   <TableCell>Recovered</TableCell>
                 </TableRow>
@@ -74,7 +74,7 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({countries}) => {
                 {countries.map((country: any) => (
                   <TableRow hover key={country?.country}>
                     <TableCell>{country?.country}</TableCell>
-                    <TableCell>{country?.confirmed}</TableCell>
+                    <TableCell>{country?.cases}</TableCell>
                     <TableCell>{country?.deaths}</TableCell>
                     <TableCell>{country?.recovered}</TableCell>
                   </TableRow>
