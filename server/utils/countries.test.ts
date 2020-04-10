@@ -10,6 +10,7 @@ describe(`dictionaryCountriesDetails`, () => {
       name: 'Country name',
       alpha2Code: 'CN',
       population: 100,
+      flag: 'pathFlag.svg',
     },
   ];
 
@@ -20,6 +21,7 @@ describe(`dictionaryCountriesDetails`, () => {
         name: 'Country name',
         alpha2Code: 'CN',
         population: 100,
+        flag: 'pathFlag.svg',
       },
     };
     expect(result).toMatchObject(expectedResult);
@@ -39,7 +41,7 @@ describe(`enhanceCountries`, () => {
       name: 'China',
       alpha2Code: 'CN',
       population: 1377422166,
-      flag: 'https://restcountries.eu/data/chn.svg',
+      flag: 'pathFlag.svg',
     },
   ];
   const countries = [
@@ -70,7 +72,7 @@ describe(`enhanceCountries`, () => {
         critical: 176,
         deaths: 3335,
         deathsPerOneMillion: 2,
-        flag: 'https://restcountries.eu/data/chn.svg',
+        flag: 'pathFlag.svg',
         percentage: '0.00594',
         population: 1377422166,
         recovered: 77370,
