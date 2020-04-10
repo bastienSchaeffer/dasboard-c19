@@ -3,7 +3,7 @@ import {MainLayout} from '../layouts';
 import {Theme, makeStyles, createStyles} from '@material-ui/core/styles';
 import {Helmet} from 'react-helmet';
 
-import {Grid} from '@material-ui/core';
+import {Grid, Typography} from '@material-ui/core';
 import Card from '../components/Card';
 import {LatestCountries} from '../components/LatestCountries';
 import {LineChart, BarChart} from '../components/Charts';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function IndexPage() {
-  const [selectedCountry, setSelectedCountry] = useState('United Kingdom');
+  const [selectedCountry, setSelectedCountry] = useState('US');
   const [world, setWorld] = useState({
     cases: 1529401,
     deaths: 89416,
@@ -63,19 +63,25 @@ function IndexPage() {
             <pre>{JSON.stringify(healthRedis, null, 2)}</pre>
           </Grid>
           <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <Card title='Cases' number={world.cases} />
+            <Card title='Cases' numberValue={world.cases} />
           </Grid>
           <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <Card title='Deaths' number={world.deaths} />
+            <Card title='Deaths' numberValue={world.deaths} />
           </Grid>
           <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <Card title='Recovered' number={world.recovered} />
+            <Card title='Recovered' numberValue={world.recovered} />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='h2'>World</Typography>
           </Grid>
           <Grid item lg={12} md={12} xl={9} xs={12}>
             <LatestCountries
               countries={latestCountries}
               setSelectedCountry={setSelectedCountry}
             />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='h2'>{selectedCountry}</Typography>
           </Grid>
           <Grid item lg={6} md={6} xl={12} xs={12}>
             <LineChart dataSet={timeline} country={selectedCountry} />
