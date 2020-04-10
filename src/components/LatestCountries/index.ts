@@ -1,1 +1,1 @@
-export {default} from './LatestCountries';
+export {default as LatestCountries} from './LatestCountries';

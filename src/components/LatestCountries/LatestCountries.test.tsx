@@ -5,11 +5,19 @@ import LatestCountries from './LatestCountries';
 const defaultProps = {
   countries: [
     {
-      country: 'United Kingdom',
-      date: '2020-4-7',
-      confirmed: 500,
-      deaths: 1000,
-      recovered: 100,
+      active: 1160,
+      cases: 81865,
+      casesPerOneMillion: 57,
+      country: 'China',
+      critical: 176,
+      deaths: 3335,
+      deathsPerOneMillion: 2,
+      flag: 'https://restcountries.eu/data/chn.svg',
+      percentage: '0.00594',
+      population: 1377422166,
+      recovered: 77370,
+      todayCases: 63,
+      todayDeaths: 2,
     },
   ],
 };

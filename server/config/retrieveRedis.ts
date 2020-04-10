@@ -41,7 +41,7 @@ const getCountries = async () => {
         countriesDetails,
         countriesCovid,
         countryCodes
-      );
+      ).sort((a: any, b: any) => b.cases - a.cases);
       console.log(`==> Countries retrieved`);
       clientRedis.set('countries', JSON.stringify(enhancedCountries));
     })
