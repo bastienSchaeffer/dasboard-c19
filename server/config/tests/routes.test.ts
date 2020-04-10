@@ -11,30 +11,40 @@ describe('GET /url', function () {
   });
 });
 
-describe('GET /timeseries', function () {
+describe('GET /world', function () {
   it('responds with json', function (done) {
     request(server)
-      .get('/timeseries')
+      .get('/world')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
 });
 
-describe('GET /latestCountries', function () {
+describe('GET /countries', function () {
   it('responds with json', function (done) {
     request(server)
-      .get('/latestCountries')
+      .get('/countries')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
 });
 
-describe('GET /dummyRedis', function () {
+describe('GET /timeline', function () {
   it('responds with json', function (done) {
     request(server)
-      .get('/dummyRedis')
+      .get('/timeline')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+});
+
+describe('GET /health', function () {
+  it('responds with json', function (done) {
+    request(server)
+      .get('/health')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);

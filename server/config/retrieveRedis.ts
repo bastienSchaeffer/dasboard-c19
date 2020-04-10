@@ -1,6 +1,11 @@
 import clientRedis from './redis';
 import axios from 'axios';
+import {enhanceCountries} from '../utils/countries';
+import {countryCodes} from '../utils/countryCodes';
 
+/*
+ * Get the 4 main data World
+ */
 const getWorld = async () => {
   let res = await axios.get('http://api.coronastatistics.live/all');
   let {data} = await res;
@@ -8,16 +13,44 @@ const getWorld = async () => {
   console.log(`==> World retrieved`);
 };
 
-const getCountries = async () => {
-  let res = await axios.get('http://api.coronastatistics.live/countries');
-  let {data} = await res;
-  clientRedis.set(
-    'countries',
-    JSON.stringify(data.sort((a: any, b: any) => b.cases - a.cases))
-  );
-  console.log(`==> Countries retrieved`);
+/*
+ * Get the population/flags
+ */
+const getCountriesDetails = async () => {
+  return axios
+    .get('https://restcountries.eu/rest/v2/all')
+    .then((response) => response.data);
 };
 
+/*
+ * Get the countries covid data detailed by country
+ */
+const getCountriesCovid = async () => {
+  return axios
+    .get('http://api.coronastatistics.live/countries')
+    .then((response) => response.data);
+};
+
+/*
+ * Get all countries data to enhance every country (flags/population/percentage)
+ */
+const getCountries = async () => {
+  axios.all([getCountriesDetails(), getCountriesCovid()]).then(
+    axios.spread((countriesDetails, countriesCovid) => {
+      const enhancedCountries = enhanceCountries(
+        countriesDetails,
+        countriesCovid,
+        countryCodes
+      );
+      console.log(`==> Countries retrieved`);
+      clientRedis.set('countries', JSON.stringify(enhancedCountries));
+    })
+  );
+};
+
+/*
+ * Get the entire timeline with detailed timeline per country
+ */
 const getTimeline = async () => {
   let res = await axios.get('https://pomber.github.io/covid19/timeseries.json');
   let {data} = await res;
@@ -25,6 +58,9 @@ const getTimeline = async () => {
   console.log(`==> Timeline retrieved`);
 };
 
+/*
+ * Simple way to check Redis update
+ */
 const setHealth = () => {
   clientRedis.set(
     'health',
@@ -33,13 +69,13 @@ const setHealth = () => {
       date: new Date(),
     })
   );
+  console.log(`==> Health: ${new Date()}`);
 };
 const covidTimeSeriesAPIData = async () => {
   getWorld();
   getCountries();
   getTimeline();
   setHealth();
-  console.log('=-=-=-=-=-=-=- Latest global: ${new Date()}');
 };
 
 export {covidTimeSeriesAPIData};
