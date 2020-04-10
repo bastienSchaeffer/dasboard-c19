@@ -1,14 +1,14 @@
-import clientRedis from './redis';
 import axios from 'axios';
-import {enhanceCountries} from '../utils/countries';
+import clientRedis from './redis';
 import {countryCodes} from '../utils/countryCodes';
+import {enhanceCountries} from '../utils/countries';
 
 /*
  * Get the 4 main data World
  */
 const getWorld = async () => {
-  let res = await axios.get('http://api.coronastatistics.live/all');
-  let {data} = await res;
+  const res = await axios.get('http://api.coronastatistics.live/all');
+  const {data} = await res;
   clientRedis.set('world', JSON.stringify(data));
   console.log(`==> World retrieved`);
 };
@@ -52,8 +52,10 @@ const getCountries = async () => {
  * Get the entire timeline with detailed timeline per country
  */
 const getTimeline = async () => {
-  let res = await axios.get('https://pomber.github.io/covid19/timeseries.json');
-  let {data} = await res;
+  const res = await axios.get(
+    'https://pomber.github.io/covid19/timeseries.json'
+  );
+  const {data} = await res;
   clientRedis.set('timeline', JSON.stringify(data));
   console.log(`==> Timeline retrieved`);
 };

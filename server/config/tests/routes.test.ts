@@ -1,8 +1,8 @@
 const request = require('supertest');
 import {server} from '../../';
 
-describe('GET /url', function () {
-  it('responds with json', function (done) {
+describe('GET /url', () => {
+  it('responds with json', (done) => {
     request(server)
       .get('/url')
       .set('Accept', 'application/json')
@@ -11,8 +11,8 @@ describe('GET /url', function () {
   });
 });
 
-describe('GET /world', function () {
-  it('responds with json', function (done) {
+describe('GET /world', () => {
+  it('responds with json', (done) => {
     request(server)
       .get('/world')
       .set('Accept', 'application/json')
@@ -21,8 +21,8 @@ describe('GET /world', function () {
   });
 });
 
-describe('GET /countries', function () {
-  it('responds with json', function (done) {
+describe('GET /countries', () => {
+  it('responds with json', (done) => {
     request(server)
       .get('/countries')
       .set('Accept', 'application/json')
@@ -31,8 +31,8 @@ describe('GET /countries', function () {
   });
 });
 
-describe('GET /timeline', function () {
-  it('responds with json', function (done) {
+describe('GET /timeline', () => {
+  it('responds with json', (done) => {
     request(server)
       .get('/timeline')
       .set('Accept', 'application/json')
@@ -41,8 +41,8 @@ describe('GET /timeline', function () {
   });
 });
 
-describe('GET /health', function () {
-  it('responds with json', function (done) {
+describe('GET /health', () => {
+  it('responds with json', (done) => {
     request(server)
       .get('/health')
       .set('Accept', 'application/json')

@@ -46,10 +46,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type CardProps = {
   title: string;
-  number: number;
+  numberValue: number;
 };
 
-const Card: React.FC<CardProps> = ({title, number}) => {
+const Card: React.FC<CardProps> = ({title, numberValue}) => {
   const classes = useStyles();
 
   return (
@@ -76,7 +76,7 @@ const Card: React.FC<CardProps> = ({title, number}) => {
         <div className={classes.difference}>
           {/* <ArrowDownwardIcon className={classes.differenceIcon} /> */}
           <Typography className={classes.differenceValue} variant='h1'>
-            {number}
+            {numberValue}
           </Typography>
           <Typography variant='caption'>Since 1 / 22 / 2020</Typography>
         </div>
