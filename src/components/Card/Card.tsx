@@ -5,81 +5,102 @@ import {
   CardContent,
   Grid,
   Typography,
-  Avatar,
 } from '@material-ui/core';
-// import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import Autorenew from '@material-ui/icons/Autorenew';
+import {Continent} from '../../types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%',
   },
-  content: {
-    alignItems: 'center',
-    display: 'flex',
-  },
   title: {
+    color: theme.palette.primary.main,
+  },
+  caption: {
     fontWeight: 700,
+    color: theme.palette.primary.main,
   },
-  avatar: {
-    backgroundColor: theme.palette.info.main,
-    height: 28,
-    width: 28,
-  },
-  icon: {
-    height: 16,
-    width: 16,
-  },
-  difference: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    alignItems: 'center',
-  },
-  differenceIcon: {
-    color: theme.palette.error.dark,
-  },
-  differenceValue: {
-    color: theme.palette.error.dark,
+  dataValue: {
+    color: theme.palette.error.main,
     marginRight: theme.spacing(1),
   },
 }));
 
 type CardProps = {
-  title: string;
-  number: number;
+  continent: Continent;
+  color: string;
 };
 
-const Card: React.FC<CardProps> = ({title, number}) => {
+const Card: React.FC<CardProps> = ({continent, color}) => {
   const classes = useStyles();
-
+  console.log(color);
+  const {name, totalCases, totalDeaths, totalRecovered} = continent;
   return (
-    <CardMUI className={classes.root}>
+    <CardMUI
+      className={classes.root}
+      style={{borderLeft: `solid 10px ${color}`}}
+    >
       <CardContent>
-        <Grid container justify='space-between'>
-          <Grid item>
-            <Typography variant='h3'>{title}</Typography>
+        <Grid
+          container
+          justify='space-between'
+          alignItems='flex-end'
+          spacing={2}
+        >
+          <Grid item xs={12}>
             <Typography
+              data-testid='title'
+              variant='h2'
               className={classes.title}
+            >
+              {name}
+            </Typography>
+            <Typography
+              className={classes.caption}
               color='textSecondary'
               gutterBottom
               variant='caption'
             >
-              WORLDWIDE
+              CONTINENT
             </Typography>
           </Grid>
-          <Grid item>
-            <Avatar className={classes.avatar}>
-              <Autorenew className={classes.icon} />
-            </Avatar>
+
+          <Grid item xs={6}>
+            <Typography
+              data-testid='total-cases'
+              className={classes.dataValue}
+              variant='h2'
+            >
+              {totalCases}
+            </Typography>
+            <Typography variant='caption' className={classes.caption}>
+              TOTAL CASES
+            </Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography
+              data-testid='total-deaths'
+              className={classes.dataValue}
+              variant='h5'
+            >
+              {totalDeaths}
+            </Typography>
+            <Typography variant='caption' className={classes.caption}>
+              DEATHS
+            </Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography
+              data-testid='total-recovered'
+              className={classes.dataValue}
+              variant='h5'
+            >
+              {totalRecovered}
+            </Typography>
+            <Typography variant='caption' className={classes.caption}>
+              RECOVERED
+            </Typography>
           </Grid>
         </Grid>
-        <div className={classes.difference}>
-          {/* <ArrowDownwardIcon className={classes.differenceIcon} /> */}
-          <Typography className={classes.differenceValue} variant='h1'>
-            {number}
-          </Typography>
-          <Typography variant='caption'>Since 1 / 22 / 2020</Typography>
-        </div>
       </CardContent>
     </CardMUI>
   );
