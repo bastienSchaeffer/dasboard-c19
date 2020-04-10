@@ -18,7 +18,7 @@ type CountryDetail = {
   alpha2Code: string;
   population: number;
   flag: string;
-  [k?: string]: any;
+  [k: string]: any;
 };
 
 // transform array to object
