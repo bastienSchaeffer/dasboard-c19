@@ -9,6 +9,8 @@
     "build:next": "next build",
     "build": "npm run build:next && npm run build:server",
     "start": "NODE_ENV=production node dist/index.js",
+    "lint:fix": "tslint -p tsconfig.json --fix",
+    "lint": "tslint -p tsconfig.json",
     "test": "jest"
   },
   "keywords": [],
@@ -45,6 +47,8 @@
     "nodemon": "^2.0.2",
     "react-test-renderer": "^16.13.1",
     "supertest": "^4.0.2",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
     "ts-node": "^8.8.2",
     "typescript": "^3.8.3"
   }
