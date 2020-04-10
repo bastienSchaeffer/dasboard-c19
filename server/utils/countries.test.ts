@@ -90,7 +90,7 @@ describe(`enhanceCountries`, () => {
       countriesWithWrongCountryName,
       countryCodes
     );
-    const expectedResult = [];
+    const expectedResult: any = [];
     expect(result).toEqual(expectedResult);
   });
 });
