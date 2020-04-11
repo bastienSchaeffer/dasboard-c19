@@ -21,6 +21,18 @@ type CountryDetail = {
   [k: string]: any;
 };
 
+//---------
+type DayCovid = {
+  date: string;
+  confirmed: number;
+  deaths: number;
+  recovered: number;
+};
+
+type Timeline = {
+  [k: string]: Array<DayCovid>;
+};
+
 // transform array to object
 const dictionaryCountriesDetails = (countriesDetails: Array<CountryDetail>) =>
   countriesDetails.reduce(
@@ -58,6 +70,7 @@ const enhanceCountries = (
         flag,
         population,
         percentage,
+        countryCode,
       };
       return [...acc, enhancedCountry];
     },
@@ -65,4 +78,42 @@ const enhanceCountries = (
   );
 };
 
-export {dictionaryCountriesDetails, getPercentage, enhanceCountries};
+const toCountryCodeKeys = (dataSet: Timeline, countryCodes: CountryCodes) => {
+  const countryHistories = Object.keys(dataSet).reduce(
+    (acc: any, item: any) => {
+      if (!countryCodes[item]) {
+        // Exceptions
+        // Diamond Princess
+        // MS Zaandam
+        return acc;
+      }
+      // const newItem = {
+      //   [countryCodes[item]]: {
+      //     country: item,
+      //     history: dataSet[item],
+      //   },
+      // };
+      const newItem = {[countryCodes[item]]: dataSet[item]};
+      return {...acc, ...newItem};
+    },
+    {}
+  );
+
+  // const countryReferal = countryHistories.FR.history;
+  const dataContract = {
+    // updated: new Date(),
+    // startDate: countryReferal[0].date,
+    // endDate: countryReferal[countryReferal.length - 1].date,
+    // totalDays: countryReferal.length,
+    ...countryHistories,
+  };
+
+  return dataContract;
+};
+
+export {
+  dictionaryCountriesDetails,
+  getPercentage,
+  enhanceCountries,
+  toCountryCodeKeys,
+};

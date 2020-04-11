@@ -1,7 +1,7 @@
 import axios from 'axios';
 import clientRedis from './redis';
 import {countryCodes} from '../utils/countryCodes';
-import {enhanceCountries} from '../utils/countries';
+import {enhanceCountries, toCountryCodeKeys} from '../utils/countries';
 
 /*
  * Get the 4 main data World
@@ -56,7 +56,9 @@ const getTimeline = async () => {
     'https://pomber.github.io/covid19/timeseries.json'
   );
   const {data} = await res;
-  clientRedis.set('timeline', JSON.stringify(data));
+  const keyedWithCountryCode = toCountryCodeKeys(data, countryCodes);
+  clientRedis.set('timeline', JSON.stringify(keyedWithCountryCode));
+  // clientRedis.set('timeline', JSON.stringify(data));
   console.log(`==> Timeline retrieved`);
 };
 

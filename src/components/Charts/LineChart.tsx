@@ -13,21 +13,15 @@ import {
 
 type LineChartProps = {
   dataSet: any;
-  country: any;
+  countryCode: string;
 };
 
-const LineChart: React.FC<LineChartProps> = ({dataSet, country}) => {
+const LineChart: React.FC<LineChartProps> = ({dataSet, countryCode}) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (country === 'USA') {
-      country = 'US';
-    }
-    if (country === 'UK') {
-      country = 'United Kingdom';
-    }
-    setData(dataSet[country]);
-  }, [dataSet, country]);
+    setData(dataSet[countryCode]);
+  }, [dataSet, countryCode]);
 
   return (
     <Card>

@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function IndexPage() {
-  const [selectedCountry, setSelectedCountry] = useState('US');
+  const [selectedCountry, setSelectedCountry] = useState('USA');
+  const [selectedCountryCode, setSelectedCountryCode] = useState('US');
   const [world, setWorld] = useState({
     cases: 1529401,
     deaths: 89416,
@@ -78,16 +79,17 @@ function IndexPage() {
             <LatestCountries
               countries={latestCountries}
               setSelectedCountry={setSelectedCountry}
+              setSelectedCountryCode={setSelectedCountryCode}
             />
           </Grid>
           <Grid item xs={12}>
             <Typography variant='h2'>{selectedCountry}</Typography>
           </Grid>
           <Grid item lg={6} md={6} xl={12} xs={12}>
-            <LineChart dataSet={timeline} country={selectedCountry} />
+            <LineChart dataSet={timeline} countryCode={selectedCountryCode} />
           </Grid>
           <Grid item lg={6} md={6} xl={12} xs={12}>
-            <BarChart dataSet={timeline} country={selectedCountry} />
+            <BarChart dataSet={timeline} countryCode={selectedCountryCode} />
           </Grid>
         </Grid>
       </div>

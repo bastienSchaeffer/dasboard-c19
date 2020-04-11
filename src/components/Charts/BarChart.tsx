@@ -13,21 +13,15 @@ import {
 
 type BarChartProps = {
   dataSet: any;
-  country: any;
+  countryCode: string;
 };
 
-const BarChart: React.FC<BarChartProps> = ({dataSet, country}) => {
+const BarChart: React.FC<BarChartProps> = ({dataSet, countryCode}) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (country === 'USA') {
-      country = 'US';
-    }
-    if (country === 'UK') {
-      country = 'United Kingdom';
-    }
-    setData(dataSet[country]);
-  }, [dataSet, country]);
+    setData(dataSet[countryCode]);
+  }, [dataSet, countryCode]);
 
   return (
     <Card>

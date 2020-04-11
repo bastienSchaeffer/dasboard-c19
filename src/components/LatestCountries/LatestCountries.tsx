@@ -21,6 +21,7 @@ interface Data {
   percentage: number;
   cases: number;
   deaths: number;
+  countryCode: string;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -149,11 +150,13 @@ const useStyles = makeStyles(() =>
 type LatestCountriesProps = {
   countries: Array<Country>;
   setSelectedCountry: any;
+  setSelectedCountryCode: any;
 };
 
 const LatestCountries: React.FC<LatestCountriesProps> = ({
   countries,
   setSelectedCountry,
+  setSelectedCountryCode,
 }) => {
   const rows = countries;
 
@@ -171,9 +174,14 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
     setOrderBy(property);
   };
 
-  const handleClick = (_event: React.MouseEvent<unknown>, name: string) => {
+  const handleClick = (
+    _event: React.MouseEvent<unknown>,
+    name: string,
+    countryCode: string
+  ) => {
     setSelected([name]);
     setSelectedCountry(name);
+    setSelectedCountryCode(countryCode);
     // console.log(setSelectedCountry);
   };
 
@@ -208,7 +216,9 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.country)}
+                      onClick={(event) =>
+                        handleClick(event, row.country, row.countryCode)
+                      }
                       role='checkbox'
                       aria-checked={isItemSelected}
                       tabIndex={-1}

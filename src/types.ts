@@ -12,4 +12,5 @@ export type Country = {
   population: number;
   percentage: string;
   flag: string;
+  countryCode: string;
 };
