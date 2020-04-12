@@ -1,8 +1,9 @@
 import {CountryCodes} from './countryCodes';
+import {Population} from '../../src/types';
 
 type CountryCovid = {
-  country: string;
-  cases: number;
+  name: string;
+  totalCases: number;
   todayCases: number;
   deaths: number;
   todayDeaths: number;
@@ -43,6 +44,19 @@ const dictionaryCountriesDetails = (countriesDetails: Array<CountryDetail>) =>
     {}
   );
 
+const dictionaryPopulation = (population: any, countryCodes: CountryCodes) =>
+  population.reduce((acc: {[name: string]: any}, item: Population) => {
+    // Missing:
+    // Northern Mariana Islands
+    if (!countryCodes[item.name]) {
+      return acc;
+    }
+    return {
+      ...acc,
+      [countryCodes[item.name]]: item,
+    };
+  }, {});
+
 // calculate percentage
 const getPercentage = (total: number, amount: number): number =>
   (amount * 100) / total;
@@ -51,26 +65,36 @@ const getPercentage = (total: number, amount: number): number =>
 const enhanceCountries = (
   countriesDetails: Array<CountryDetail>,
   countriesCovid: Array<CountryCovid>,
-  countryCodes: CountryCodes
+  countryCodes: CountryCodes,
+  population: any
 ) => {
   const dictionaryDetails = dictionaryCountriesDetails(countriesDetails);
+  const dictionaryP = dictionaryPopulation(population, countryCodes);
+
   return countriesCovid.reduce(
     (acc: Array<CountryCovid>, countryItem: CountryCovid) => {
-      const {cases, country} = countryItem;
-      const countryCode = countryCodes[country];
+      const {totalCases, name} = countryItem;
+      const countryCode = countryCodes[name];
 
       if (!countryCode) {
+        // Missing:
+        //  Diamond Princess
+        //  MS Zaandam
+        //  CAR
         return acc;
       }
 
-      const {flag, population} = dictionaryDetails[countryCode];
-      const percentage = getPercentage(population, cases).toFixed(5);
+      const population = dictionaryP[countryCode].totalPopulation || 0;
+      const {flag, latlng} = dictionaryDetails[countryCode];
+      const percentage = getPercentage(population, totalCases).toFixed(5);
+
       const enhancedCountry = {
         ...countryItem,
         flag,
-        population,
+        latlng,
         percentage,
         countryCode,
+        population,
       };
       return [...acc, enhancedCountry];
     },

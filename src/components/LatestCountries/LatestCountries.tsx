@@ -16,11 +16,11 @@ import {
 import {Country} from '../../types';
 
 interface Data {
-  country: string;
+  name: string;
   population: number;
   percentage: number;
-  cases: number;
-  deaths: number;
+  totalCases: number;
+  totalDeaths: number;
   countryCode: string;
 }
 
@@ -65,11 +65,11 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  {id: 'country', numeric: false, label: 'Country'},
+  {id: 'name', numeric: false, label: 'Country'},
   {id: 'population', numeric: true, label: 'Population'},
   {id: 'percentage', numeric: true, label: 'Percentage'},
-  {id: 'cases', numeric: true, label: 'Cases'},
-  {id: 'deaths', numeric: true, label: 'Deaths'},
+  {id: 'totalCases', numeric: true, label: 'Cases'},
+  {id: 'totalDeaths', numeric: true, label: 'Deaths'},
 ];
 
 interface EnhancedTableHeadProps {
@@ -162,7 +162,7 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
 
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('desc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('cases');
+  const [orderBy, setOrderBy] = React.useState<keyof Data>('totalCases');
   const [selected, setSelected] = React.useState<string[]>([]);
 
   const handleRequestSort = (
@@ -210,19 +210,19 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy)).map(
                 (row, index) => {
-                  const isItemSelected = isSelected(row.country);
+                  const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
                       onClick={(event) =>
-                        handleClick(event, row.country, row.countryCode)
+                        handleClick(event, row.name, row.countryCode)
                       }
                       role='checkbox'
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.country}
+                      key={row.name}
                       selected={isItemSelected}
                     >
                       <TableCell
@@ -231,20 +231,20 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
                         scope='row'
                         padding='default'
                       >
-                        {row.country}
+                        {row.name}
                         <br />
                         <img
                           src={row.flag}
                           style={{maxWidth: 50}}
-                          alt={row.country}
+                          alt={row.name}
                         />
                       </TableCell>
                       <TableCell align='right'>{row.population}</TableCell>
                       <TableCell align='right'>
                         {Number(row.percentage)}
                       </TableCell>
-                      <TableCell align='right'>{row.cases}</TableCell>
-                      <TableCell align='right'>{row.deaths}</TableCell>
+                      <TableCell align='right'>{row.totalCases}</TableCell>
+                      <TableCell align='right'>{row.totalDeaths}</TableCell>
                     </TableRow>
                   );
                 }

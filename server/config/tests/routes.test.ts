@@ -31,6 +31,16 @@ describe('GET /countries', () => {
   });
 });
 
+describe('GET /continents', () => {
+  it('responds with json', (done) => {
+    request(server)
+      .get('/continents')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+});
+
 describe('GET /timeline', () => {
   it('responds with json', (done) => {
     request(server)

@@ -2,19 +2,36 @@ import axios from 'axios';
 import clientRedis from './redis';
 import {countryCodes} from '../utils/countryCodes';
 import {enhanceCountries, toCountryCodeKeys} from '../utils/countries';
+import {
+  getWDMCovidContinents,
+  getWDMCovidCountries,
+  getWDMCovidWorld,
+  getWDMPopulation,
+} from '../scraping/worldometers';
+import {Continent} from '../../src/types';
 
 /*
- * Get the 4 main data World
+ * Get the world covid data
  */
 const getWorld = async () => {
-  const res = await axios.get('http://api.coronastatistics.live/all');
-  const {data} = await res;
-  clientRedis.set('world', JSON.stringify(data));
-  console.log(`==> World retrieved`);
+  const data = await getWDMCovidWorld();
+  clientRedis.set('world', JSON.stringify(data[0]));
 };
 
 /*
- * Get the population/flags
+ * Get the continents covid data
+ */
+const getContinents = async () => {
+  const data = await getWDMCovidContinents();
+  // Remove world retrieved as continent
+  const withoutWorld = data.filter(
+    (continent: Continent) => continent.continent !== 'All'
+  );
+  clientRedis.set('continents', JSON.stringify(withoutWorld));
+};
+
+/*
+ * Get the population/flags data
  */
 const getCountriesDetails = async () => {
   return axios
@@ -23,33 +40,38 @@ const getCountriesDetails = async () => {
 };
 
 /*
- * Get the countries covid data detailed by country
+ * Get the countries covid data
  */
 const getCountriesCovid = async () => {
-  return axios
-    .get('http://api.coronastatistics.live/countries')
-    .then((response) => response.data);
+  return getWDMCovidCountries();
 };
 
 /*
- * Get all countries data to enhance every country (flags/population/percentage)
+ * Get the world population
+ */
+const getPopulation = async () => {
+  return getWDMPopulation();
+};
+
+/*
+ * Get the countries covid data associated to the flags/population
  */
 const getCountries = async () => {
-  axios.all([getCountriesDetails(), getCountriesCovid()]).then(
-    axios.spread((countriesDetails, countriesCovid) => {
+  axios.all([getCountriesDetails(), getCountriesCovid(), getPopulation()]).then(
+    axios.spread((countriesDetails, countriesCovid, population) => {
       const enhancedCountries = enhanceCountries(
         countriesDetails,
         countriesCovid,
-        countryCodes
+        countryCodes,
+        population
       ).sort((a: any, b: any) => b.cases - a.cases);
-      console.log(`==> Countries retrieved`);
       clientRedis.set('countries', JSON.stringify(enhancedCountries));
     })
   );
 };
 
 /*
- * Get the entire timeline with detailed timeline per country
+ * Get the countries covid data with corresponding timeline evolution
  */
 const getTimeline = async () => {
   const res = await axios.get(
@@ -58,12 +80,10 @@ const getTimeline = async () => {
   const {data} = await res;
   const keyedWithCountryCode = toCountryCodeKeys(data, countryCodes);
   clientRedis.set('timeline', JSON.stringify(keyedWithCountryCode));
-  // clientRedis.set('timeline', JSON.stringify(data));
-  console.log(`==> Timeline retrieved`);
 };
 
 /*
- * Simple way to check Redis update
+ * Set Redis health check
  */
 const setHealth = () => {
   clientRedis.set(
@@ -77,6 +97,7 @@ const setHealth = () => {
 };
 const covidTimeSeriesAPIData = async () => {
   getWorld();
+  getContinents();
   getCountries();
   getTimeline();
   setHealth();

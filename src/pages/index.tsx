@@ -22,10 +22,11 @@ function IndexPage() {
   const [selectedCountry, setSelectedCountry] = useState('USA');
   const [selectedCountryCode, setSelectedCountryCode] = useState('US');
   const [world, setWorld] = useState({
-    cases: 1529401,
-    deaths: 89416,
-    recovered: 337164,
+    totalCases: 1529401,
+    totalDeaths: 89416,
+    totalRecovered: 337164,
   });
+  const [continents, setContinents] = useState([{name: 'm', totalCases: 0}]);
   const [healthRedis, setHealthRedis] = useState([]);
   const [latestCountries, setLatestCountries] = useState([]);
   const [timeline, setTimeline] = useState({});
@@ -38,9 +39,15 @@ function IndexPage() {
   }, []);
 
   useEffect(() => {
-    fetch('/world')
+    fetch('/worldNew')
       .then((response) => response.json())
       .then((response) => setWorld(response));
+  }, []);
+
+  useEffect(() => {
+    fetch('/continents')
+      .then((response) => response.json())
+      .then((response) => setContinents(response));
   }, []);
 
   useEffect(() => {
@@ -64,14 +71,21 @@ function IndexPage() {
             <pre>{JSON.stringify(healthRedis, null, 2)}</pre>
           </Grid>
           <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <Card title='Cases' numberValue={world.cases} />
+            <Card title='Cases' numberValue={world.totalCases} />
           </Grid>
           <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <Card title='Deaths' numberValue={world.deaths} />
+            <Card title='Deaths' numberValue={world.totalDeaths} />
           </Grid>
           <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <Card title='Recovered' numberValue={world.recovered} />
+            <Card title='Recovered' numberValue={world.totalRecovered} />
           </Grid>
+
+          {continents.map((item) => (
+            <Grid item lg={3} sm={6} xl={3} xs={12} key={item.name}>
+              <Card title={item.name} numberValue={item.totalCases} />
+            </Grid>
+          ))}
+
           <Grid item xs={12}>
             <Typography variant='h2'>World</Typography>
           </Grid>
