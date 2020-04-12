@@ -35,7 +35,7 @@ type Timeline = {
 };
 
 // transform array to object
-const dictionaryCountriesDetails = (countriesDetails: Array<CountryDetail>) =>
+const hashCountriesDetails = (countriesDetails: Array<CountryDetail>) =>
   countriesDetails.reduce(
     (acc: {[name: string]: CountryDetail}, item: CountryDetail) => ({
       ...acc,
@@ -44,7 +44,7 @@ const dictionaryCountriesDetails = (countriesDetails: Array<CountryDetail>) =>
     {}
   );
 
-const dictionaryPopulation = (population: any, countryCodes: CountryCodes) =>
+const hashPopulation = (population: any, countryCodes: CountryCodes) =>
   population.reduce((acc: {[name: string]: any}, item: Population) => {
     // Missing:
     // Northern Mariana Islands
@@ -68,8 +68,8 @@ const enhanceCountries = (
   countryCodes: CountryCodes,
   population: any
 ) => {
-  const dictionaryDetails = dictionaryCountriesDetails(countriesDetails);
-  const dictionaryP = dictionaryPopulation(population, countryCodes);
+  const dictionaryDetails = hashCountriesDetails(countriesDetails);
+  const dictionaryPopulation = hashPopulation(population, countryCodes);
 
   return countriesCovid.reduce(
     (acc: Array<CountryCovid>, countryItem: CountryCovid) => {
@@ -84,7 +84,8 @@ const enhanceCountries = (
         return acc;
       }
 
-      const population = dictionaryP[countryCode].totalPopulation || 0;
+      const population = dictionaryPopulation[countryCode].totalPopulation || 0;
+      const mediumAge = dictionaryPopulation[countryCode].mediumAge || 'N/A';
       const {flag, latlng} = dictionaryDetails[countryCode];
       const percentage = getPercentage(population, totalCases).toFixed(5);
 
@@ -95,6 +96,7 @@ const enhanceCountries = (
         percentage,
         countryCode,
         population,
+        mediumAge,
       };
       return [...acc, enhancedCountry];
     },
@@ -136,7 +138,8 @@ const toCountryCodeKeys = (dataSet: Timeline, countryCodes: CountryCodes) => {
 };
 
 export {
-  dictionaryCountriesDetails,
+  hashCountriesDetails,
+  hashPopulation,
   getPercentage,
   enhanceCountries,
   toCountryCodeKeys,

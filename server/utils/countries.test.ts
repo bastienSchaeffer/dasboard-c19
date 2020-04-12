@@ -1,10 +1,11 @@
 import {
-  dictionaryCountriesDetails,
+  hashCountriesDetails,
+  // hashPopulation,
   getPercentage,
   enhanceCountries,
 } from './countries';
 
-describe(`dictionaryCountriesDetails`, () => {
+describe(`hashCountriesDetails`, () => {
   const dataCountries = [
     {
       name: 'Country name',
@@ -15,7 +16,7 @@ describe(`dictionaryCountriesDetails`, () => {
   ];
 
   it(`should return a hash map object`, () => {
-    const result = dictionaryCountriesDetails(dataCountries);
+    const result = hashCountriesDetails(dataCountries);
     const expectedResult = {
       CN: {
         name: 'Country name',

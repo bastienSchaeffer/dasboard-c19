@@ -17,6 +17,7 @@ export type Country = {
   percentage: string;
   countryCode: string;
   latlng: Array<number>;
+  mediumAge: number | string;
 };
 
 export type Continent = {
