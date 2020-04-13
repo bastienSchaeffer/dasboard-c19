@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Card, CardHeader, Divider} from '@material-ui/core';
+import {useTheme} from '@material-ui/core/styles';
 import {
   XAxis,
   YAxis,
@@ -14,14 +15,33 @@ import {
 type BarChartProps = {
   dataSet: any;
   countryCode: string;
+  daysSelected: number[];
 };
 
-const BarChart: React.FC<BarChartProps> = ({dataSet, countryCode}) => {
+const BarChart: React.FC<BarChartProps> = ({
+  dataSet,
+  countryCode,
+  daysSelected,
+}) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(dataSet[countryCode]);
-  }, [dataSet, countryCode]);
+    let data = dataSet[countryCode];
+    if (data && data.length) {
+      data = data.slice(daysSelected[0], daysSelected[1]);
+    }
+    setData(data);
+  }, [dataSet, countryCode, daysSelected]);
+
+  const theme = useTheme();
+  const COLORS = [
+    theme.palette.primary.main,
+    theme.palette.graphs.main,
+    theme.palette.error.main,
+    theme.palette.warning.main,
+    theme.palette.info.main,
+    theme.palette.success.main,
+  ];
 
   return (
     <Card>
@@ -38,8 +58,8 @@ const BarChart: React.FC<BarChartProps> = ({dataSet, countryCode}) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey='confirmed' fill={'#0288D1'} />
-            <Bar dataKey='deaths' fill={'#26C6DA'} />
+            <Bar dataKey='confirmed' fill={COLORS[0]} />
+            <Bar dataKey='deaths' fill={COLORS[1]} />
           </BarChartRecharts>
         ) : (
           <p>loading</p>

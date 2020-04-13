@@ -239,12 +239,24 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
                           alt={row.name}
                         />
                       </TableCell>
-                      <TableCell align='right'>{row.population}</TableCell>
+                      <TableCell align='right'>
+                        {row.population}
+                        <br />
+                        Medium age: {row.mediumAge}
+                      </TableCell>
                       <TableCell align='right'>
                         {Number(row.percentage)}
                       </TableCell>
-                      <TableCell align='right'>{row.totalCases}</TableCell>
-                      <TableCell align='right'>{row.totalDeaths}</TableCell>
+                      <TableCell align='right'>
+                        {row.totalCases}
+                        <br />
+                        today: {row.newCases}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {row.totalDeaths}
+                        <br />
+                        today: {row.newDeaths}
+                      </TableCell>
                     </TableRow>
                   );
                 }

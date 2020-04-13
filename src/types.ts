@@ -1,3 +1,12 @@
+declare module '@material-ui/core/styles/createPalette' {
+  interface PaletteOptions {
+    graphs?: PaletteColorOptions;
+  }
+  interface Palette {
+    graphs: PaletteColor;
+  }
+}
+
 export type Country = {
   name: string;
   totalCases: number;

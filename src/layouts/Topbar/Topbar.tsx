@@ -14,7 +14,7 @@ const Topbar = () => {
     <AppBar>
       <Toolbar>
         <Typography gutterBottom variant='h1' className={classes.appTitle}>
-          Dashboard Countries
+          Dashboard coronaboule
         </Typography>
       </Toolbar>
     </AppBar>

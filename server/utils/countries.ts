@@ -125,7 +125,12 @@ const toCountryCodeKeys = (dataSet: Timeline, countryCodes: CountryCodes) => {
     {}
   );
 
-  // const countryReferal = countryHistories.FR.history;
+  if (countryHistories.FR) {
+    // const countryReferal = countryHistories.FR.history;
+    console.log('-------> LENGTH SLIDER');
+    console.log(countryHistories.FR.length);
+  }
+
   const dataContract = {
     // updated: new Date(),
     // startDate: countryReferal[0].date,

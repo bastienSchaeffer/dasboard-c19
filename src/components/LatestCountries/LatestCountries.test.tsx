@@ -2,27 +2,36 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import LatestCountries from './LatestCountries';
 
+const setSelectedCountry = jest.fn();
+const setSelectedCountryCode = jest.fn();
 const defaultProps = {
   countries: [
     {
-      active: 1160,
-      cases: 81865,
-      casesPerOneMillion: 57,
-      country: 'China',
-      critical: 176,
-      deaths: 3335,
-      deathsPerOneMillion: 2,
-      flag: 'https://restcountries.eu/data/chn.svg',
-      percentage: '0.00594',
-      population: 1377422166,
-      recovered: 77370,
-      todayCases: 63,
-      todayDeaths: 2,
+      name: 'UK',
+      totalCases: 78991,
+      newCases: 0,
+      totalDeaths: 9875,
+      newDeaths: 0,
+      totalRecovered: 344,
+      activeCases: 68772,
+      seriousCritical: 1559,
+      casesPerOneMillion: 1164,
+      deathsPerOneMillion: 145,
+      totalTests: 334974,
+      testsPerOneMillion: 4934,
+      continent: 'Europe',
+      flag: 'https://restcountries.eu/data/gbr.svg',
+      latlng: [54, -2],
+      percentage: '0.11636',
+      countryCode: 'GB',
+      population: 67886011,
     },
   ],
+  setSelectedCountry,
+  setSelectedCountryCode,
 };
 test(`renders LatestCountries`, () => {
   const {getByText} = render(<LatestCountries {...defaultProps} />);
-  const latestCountriesElement = getByText(/United Kingdom/i);
+  const latestCountriesElement = getByText(/UK/i);
   expect(latestCountriesElement).toBeInTheDocument();
 });

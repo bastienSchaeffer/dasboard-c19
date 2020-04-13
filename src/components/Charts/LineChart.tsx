@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Card, CardHeader, Divider} from '@material-ui/core';
+import {useTheme} from '@material-ui/core/styles';
 import {
   LineChart as LineChartRecharts,
   Line,
@@ -14,14 +15,33 @@ import {
 type LineChartProps = {
   dataSet: any;
   countryCode: string;
+  daysSelected: number[];
 };
 
-const LineChart: React.FC<LineChartProps> = ({dataSet, countryCode}) => {
+const LineChart: React.FC<LineChartProps> = ({
+  dataSet,
+  countryCode,
+  daysSelected,
+}) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(dataSet[countryCode]);
-  }, [dataSet, countryCode]);
+    let data = dataSet[countryCode];
+    if (data && data.length) {
+      data = data.slice(daysSelected[0], daysSelected[1]);
+    }
+    setData(data);
+  }, [dataSet, countryCode, daysSelected]);
+
+  const theme = useTheme();
+  const COLORS = [
+    theme.palette.primary.main,
+    theme.palette.graphs.main,
+    theme.palette.error.main,
+    theme.palette.warning.main,
+    theme.palette.info.main,
+    theme.palette.success.main,
+  ];
 
   return (
     <Card>
@@ -41,16 +61,16 @@ const LineChart: React.FC<LineChartProps> = ({dataSet, countryCode}) => {
             <Line
               type='monotone'
               dataKey='confirmed'
-              stroke='#0288D1'
-              activeDot={{r: 8}}
-              strokeWidth={2}
+              stroke={COLORS[0]}
+              activeDot={{r: 2}}
+              strokeWidth={4}
             />
             <Line
               type='monotone'
               dataKey='deaths'
-              stroke='#26C6DA'
-              activeDot={{r: 8}}
-              strokeWidth={2}
+              stroke={COLORS[1]}
+              activeDot={{r: 2}}
+              strokeWidth={4}
             />
           </LineChartRecharts>
         ) : (

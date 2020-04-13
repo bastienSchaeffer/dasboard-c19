@@ -5,10 +5,7 @@ import {
   CardContent,
   Grid,
   Typography,
-  Avatar,
 } from '@material-ui/core';
-// import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import Autorenew from '@material-ui/icons/Autorenew';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -19,27 +16,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
   },
   title: {
+    color: theme.palette.primary.main,
+  },
+  caption: {
     fontWeight: 700,
+    color: theme.palette.primary.main,
   },
-  avatar: {
-    backgroundColor: theme.palette.info.main,
-    height: 28,
-    width: 28,
-  },
-  icon: {
-    height: 16,
-    width: 16,
-  },
-  difference: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    alignItems: 'center',
-  },
-  differenceIcon: {
-    color: theme.palette.error.dark,
-  },
-  differenceValue: {
-    color: theme.palette.error.dark,
+  dataValue: {
+    color: theme.palette.error.main,
     marginRight: theme.spacing(1),
   },
 }));
@@ -55,31 +39,38 @@ const Card: React.FC<CardProps> = ({title, numberValue}) => {
   return (
     <CardMUI className={classes.root}>
       <CardContent>
-        <Grid container justify='space-between'>
-          <Grid item>
-            <Typography variant='h3'>{title}</Typography>
+        <Grid container justify='space-between' spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant='h2' className={classes.title}>
+              {title}
+            </Typography>
             <Typography
-              className={classes.title}
+              className={classes.caption}
               color='textSecondary'
               gutterBottom
               variant='caption'
             >
-              WORLDWIDE
+              CONTINENT
             </Typography>
           </Grid>
-          <Grid item>
-            <Avatar className={classes.avatar}>
-              <Autorenew className={classes.icon} />
-            </Avatar>
+
+          <Grid item xs={6}>
+            <Typography className={classes.dataValue} variant='h2'>
+              {numberValue}
+            </Typography>
+            <Typography variant='caption' className={classes.caption}>
+              DEATHS
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography className={classes.dataValue} variant='h2'>
+              {numberValue}
+            </Typography>
+            <Typography variant='caption' className={classes.caption}>
+              NEW CASES
+            </Typography>
           </Grid>
         </Grid>
-        <div className={classes.difference}>
-          {/* <ArrowDownwardIcon className={classes.differenceIcon} /> */}
-          <Typography className={classes.differenceValue} variant='h1'>
-            {numberValue}
-          </Typography>
-          <Typography variant='caption'>Since 1 / 22 / 2020</Typography>
-        </div>
       </CardContent>
     </CardMUI>
   );

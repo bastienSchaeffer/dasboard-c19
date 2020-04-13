@@ -24,9 +24,17 @@ const getWorld = async () => {
 const getContinents = async () => {
   const data = await getWDMCovidContinents();
   // Remove world retrieved as continent
-  const withoutWorld = data.filter(
-    (continent: Continent) => continent.continent !== 'All'
-  );
+  const withoutWorld = data
+    .filter((continent: Continent) => continent.continent !== 'All')
+    .sort(function (a: any, b: any) {
+      if (a.continent < b.continent) {
+        return -1;
+      }
+      if (a.continent > b.continent) {
+        return 1;
+      }
+      return 0;
+    });
   clientRedis.set('continents', JSON.stringify(withoutWorld));
 };
 
