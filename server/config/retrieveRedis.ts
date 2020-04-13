@@ -8,7 +8,7 @@ import {
   getWDMCovidWorld,
   getWDMPopulation,
 } from '../scraping/worldometers';
-import {Continent} from '../../src/types';
+import {Continent} from '../types';
 
 /*
  * Get the world covid data

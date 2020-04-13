@@ -1,5 +1,5 @@
 import {CountryCodes} from './countryCodes';
-import {Population} from '../../src/types';
+import {Population} from '../types';
 
 type CountryCovid = {
   name: string;
