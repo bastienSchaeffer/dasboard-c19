@@ -25,21 +25,6 @@ export default (app: Application) => {
     });
   });
 
-  app.get(
-    '/continents',
-    (_req: Request, res: Response, _next: NextFunction) => {
-      return clientRedis.get('continents', (err: Errback, result: any) => {
-        if (err) throw err;
-        // If that key exist in Redis store
-        if (result) {
-          return res.status(200).json(JSON.parse(result));
-        } else {
-          res.status(500);
-        }
-      });
-    }
-  );
-
   app.get('/countries', (_req: Request, res: Response, _next: NextFunction) => {
     return clientRedis.get('countries', (err: Errback, result: any) => {
       if (err) throw err;
