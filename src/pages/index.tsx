@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {MainLayout} from '../layouts';
 import {Theme, makeStyles, createStyles} from '@material-ui/core/styles';
 import {Helmet} from 'react-helmet';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function IndexPage() {
   const [selectedCountry, setSelectedCountry] = useState('USA');
   const [selectedCountryCode, setSelectedCountryCode] = useState('US');
-  const [world, setWorld] = React.useState<Continent>({
+  const [world] = React.useState<Continent>({
     name: 'stringify',
     totalCases: 0,
     newCases: 0,
@@ -38,42 +38,42 @@ function IndexPage() {
     testsPerOneMillion: 0,
     continent: 'stringify',
   });
-  const [continents, setContinents] = useState([{name: 'm', totalCases: 0}]);
-  const [healthRedis, setHealthRedis] = useState({date: ''});
-  const [latestCountries, setLatestCountries] = useState([]);
+  const [continents] = useState([{name: 'm', totalCases: 0}]);
+  const [healthRedis] = useState({date: ''});
+  const [latestCountries] = useState([]);
   const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
-  const [timeline, setTimeline] = useState({});
+  const [timeline] = useState({});
   const classes = useStyles();
 
-  useEffect(() => {
-    fetch('/health')
-      .then((response) => response.json())
-      .then((response) => setHealthRedis(response));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/health')
+  //     .then((response) => response.json())
+  //     .then((response) => setHealthRedis(response));
+  // }, []);
 
-  useEffect(() => {
-    fetch('/world')
-      .then((response) => response.json())
-      .then((response) => setWorld(response));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/world')
+  //     .then((response) => response.json())
+  //     .then((response) => setWorld(response));
+  // }, []);
 
-  useEffect(() => {
-    fetch('/continents')
-      .then((response) => response.json())
-      .then((response) => setContinents(response));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/continents')
+  //     .then((response) => response.json())
+  //     .then((response) => setContinents(response));
+  // }, []);
 
-  useEffect(() => {
-    fetch('/countries')
-      .then((response) => response.json())
-      .then((response) => setLatestCountries(response));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/countries')
+  //     .then((response) => response.json())
+  //     .then((response) => setLatestCountries(response));
+  // }, []);
 
-  useEffect(() => {
-    fetch('/timeline')
-      .then((response) => response.json())
-      .then((response) => setTimeline(response));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/timeline')
+  //     .then((response) => response.json())
+  //     .then((response) => setTimeline(response));
+  // }, []);
 
   const style = {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
