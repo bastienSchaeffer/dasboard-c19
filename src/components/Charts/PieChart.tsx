@@ -19,7 +19,8 @@ const PieChart: React.FC<LineChartProps> = () => {
     theme.palette.primary.main,
     theme.palette.error.main,
     theme.palette.warning.main,
-    theme.palette.graphs.main,
+    // theme.palette.graphs.main,
+    theme.palette.warning.main,
     theme.palette.info.main,
     theme.palette.success.main,
   ];
