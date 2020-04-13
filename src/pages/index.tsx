@@ -4,63 +4,41 @@ import {Theme, makeStyles, createStyles} from '@material-ui/core/styles';
 import {Helmet} from 'react-helmet';
 
 import {Grid, Typography} from '@material-ui/core';
+import {
+  Card as CardMUI,
+  CardHeader,
+  Divider,
+  CardContent,
+} from '@material-ui/core';
 import {Card, CardToday} from '../components/Card';
 import {LatestCountries} from '../components/LatestCountries';
 import {LineChart, BarChart, PieChart} from '../components/Charts';
 import DiscreteSlider from '../components/Slider/Slider';
 import {Continent} from '../types';
+import useGraphColors from '../components/Charts/useGraphColors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       backgroundColor: theme.palette.background.default,
       // background: 'linear-gradient(180deg, #e0f1ff 30%, #05A9F4 90%)',
-      padding: theme.spacing(4),
+      padding: theme.spacing(6),
       height: '100%',
     },
   })
 );
-
-function IndexPage() {
+// Property 'name' does not exist on type 'never'.ts(2339)
+const IndexPage: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState('USA');
   const [selectedCountryCode, setSelectedCountryCode] = useState('US');
-  const [world, setWorld] = React.useState<Continent>({
-    name: 'stringify',
-    totalCases: 0,
-    newCases: 0,
-    totalDeaths: 0,
-    newDeaths: 0,
-    totalRecovered: 0,
-    activeCases: 0,
-    seriousCritical: 0,
-    casesPerOneMillion: 0,
-    deathsPerOneMillion: 0,
-    totalTests: 0,
-    testsPerOneMillion: 0,
-    continent: 'stringify',
-  });
-  const [continents, setContinents] = useState([
-    {
-      name: 'stringify',
-      totalCases: 0,
-      newCases: 0,
-      totalDeaths: 0,
-      newDeaths: 0,
-      totalRecovered: 0,
-      activeCases: 0,
-      seriousCritical: 0,
-      casesPerOneMillion: 0,
-      deathsPerOneMillion: 0,
-      totalTests: 0,
-      testsPerOneMillion: 0,
-      continent: 'stringify',
-    },
-  ]);
+  const [world, setWorld] = React.useState<Continent>();
+  const [continents, setContinents] = useState<Continent[]>([]);
   const [healthRedis, setHealthRedis] = useState({date: ''});
   const [latestCountries, setLatestCountries] = useState([]);
   const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
   const [timeline, setTimeline] = useState({});
   const classes = useStyles();
+  const {GraphColorsKey} = useGraphColors();
 
   useEffect(() => {
     fetch('/health')
@@ -119,24 +97,22 @@ function IndexPage() {
             </Typography>
           </Grid>
         </Grid>
+
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <CardToday continent={world}>
-              <pre>{JSON.stringify(healthRedis, null, 2)}</pre>
-            </CardToday>
+            {world && <CardToday continent={world} />}
           </Grid>
         </Grid>
-        <Grid container spacing={4}>
+
+        <Grid container spacing={4} alignItems='center'>
           <Grid item xs={12} md={4}>
-            <br />
-            <br />
-            <PieChart />
+            <PieChart dataSet={continents} />
           </Grid>
           <Grid item xs={12} md={8}>
             <Grid container justify='space-between'>
               {continents.map((item) => (
                 <Grid item xs={12} md={6}>
-                  <Card title={item.name} continent={item} key={item.name} />
+                  <Card continent={item} key={item.name} />
                 </Grid>
               ))}
             </Grid>
@@ -160,23 +136,66 @@ function IndexPage() {
             <DiscreteSlider steps={81} setDaysSelected={setDaysSelected} />
           </Grid>
           <Grid item lg={6} md={6} xl={12} xs={12}>
-            <LineChart
-              dataSet={timeline}
-              countryCode={selectedCountryCode}
-              daysSelected={daysSelected}
-            />
+            <CardMUI>
+              <CardHeader title='Total Cases Evolution' />
+              <Divider />
+              <CardContent>
+                <LineChart
+                  dataSet={timeline}
+                  countryCode={selectedCountryCode}
+                  daysSelected={daysSelected}
+                  config={[{key: 'confirmed', color: GraphColorsKey.primary}]}
+                />
+              </CardContent>
+            </CardMUI>
           </Grid>
           <Grid item lg={6} md={6} xl={12} xs={12}>
-            <BarChart
-              dataSet={timeline}
-              countryCode={selectedCountryCode}
-              daysSelected={daysSelected}
-            />
+            <CardMUI>
+              <CardHeader title='Total Deaths And Recovery Evolution' />
+              <Divider />
+              <CardContent>
+                <BarChart
+                  dataSet={timeline}
+                  countryCode={selectedCountryCode}
+                  daysSelected={daysSelected}
+                  config={[
+                    {key: 'deaths', color: GraphColorsKey.primary},
+                    {key: 'recovered', color: GraphColorsKey.recovered},
+                  ]}
+                />
+              </CardContent>
+            </CardMUI>
           </Grid>
         </Grid>
       </div>
     </MainLayout>
   );
-}
+};
 
 export default IndexPage;
+
+/*
+  "name": "USA",
+  "totalCases": 577332,
+  "newCases": 17032,
+  "totalDeaths": 23077,
+  "newDeaths": 972,
+  "totalRecovered": 33907,
+  "activeCases": 520348,
+  "seriousCritical": 12565,
+  "casesPerOneMillion": 1744,
+  "deathsPerOneMillion": 70,
+  "totalTests": 2910185,
+  "testsPerOneMillion": 8792,
+  "continent": "North America",
+  "flag": "https://restcountries.eu/data/usa.svg",
+  "latlng": [
+      38,
+      -97
+  ],
+  "percentage": "0.17442",
+  "countryCode": "US",
+  "population": 331002651,
+  "mediumAge": 38
+
+*/

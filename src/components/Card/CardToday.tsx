@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type CardProps = {
-  continent: Continent;
+  readonly continent: Continent;
 };
 
 const CardToday: React.FC<CardProps> = ({continent}) => {
@@ -42,7 +42,7 @@ const CardToday: React.FC<CardProps> = ({continent}) => {
     <Paper className={classes.root} elevation={3}>
       <Grid container justify='space-between'>
         <Grid item xs={12} md={3} className={classes.box}>
-          <Typography variant='h1' color='inherit'>
+          <Typography data-testid='total-cases' variant='h1' color='inherit'>
             {totalCases}
           </Typography>
           <Typography
@@ -55,7 +55,7 @@ const CardToday: React.FC<CardProps> = ({continent}) => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={3} className={classes.box}>
-          <Typography variant='h1' color='inherit'>
+          <Typography data-testid='total-deaths' variant='h1' color='inherit'>
             {totalDeaths}
           </Typography>
           <Typography
@@ -68,7 +68,7 @@ const CardToday: React.FC<CardProps> = ({continent}) => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={3} className={classes.box}>
-          <Typography variant='h1' color='inherit'>
+          <Typography data-testid='active-cases' variant='h1' color='inherit'>
             {activeCases}
           </Typography>
           <Typography
@@ -81,7 +81,11 @@ const CardToday: React.FC<CardProps> = ({continent}) => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={3} className={classes.box}>
-          <Typography variant='h1' color='inherit'>
+          <Typography
+            data-testid='total-recovered'
+            variant='h1'
+            color='inherit'
+          >
             {totalRecovered}
           </Typography>
           <Typography

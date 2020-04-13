@@ -12,10 +12,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%',
   },
-  content: {
-    alignItems: 'center',
-    display: 'flex',
-  },
   title: {
     color: theme.palette.primary.main,
   },
@@ -30,14 +26,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type CardProps = {
-  title: string;
   continent: Continent;
 };
 
-const Card: React.FC<CardProps> = ({title, continent}) => {
+const Card: React.FC<CardProps> = ({continent}) => {
   const classes = useStyles();
 
-  const {totalCases, totalDeaths, totalRecovered} = continent;
+  const {name, totalCases, totalDeaths, totalRecovered} = continent;
   return (
     <CardMUI className={classes.root}>
       <CardContent>
@@ -48,8 +43,12 @@ const Card: React.FC<CardProps> = ({title, continent}) => {
           spacing={2}
         >
           <Grid item xs={12}>
-            <Typography variant='h2' className={classes.title}>
-              {title}
+            <Typography
+              data-testid='title'
+              variant='h2'
+              className={classes.title}
+            >
+              {name}
             </Typography>
             <Typography
               className={classes.caption}
@@ -62,7 +61,11 @@ const Card: React.FC<CardProps> = ({title, continent}) => {
           </Grid>
 
           <Grid item xs={6}>
-            <Typography className={classes.dataValue} variant='h2'>
+            <Typography
+              data-testid='total-cases'
+              className={classes.dataValue}
+              variant='h2'
+            >
               {totalCases}
             </Typography>
             <Typography variant='caption' className={classes.caption}>
@@ -70,7 +73,11 @@ const Card: React.FC<CardProps> = ({title, continent}) => {
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography className={classes.dataValue} variant='h5'>
+            <Typography
+              data-testid='total-deaths'
+              className={classes.dataValue}
+              variant='h5'
+            >
               {totalDeaths}
             </Typography>
             <Typography variant='caption' className={classes.caption}>
@@ -78,7 +85,11 @@ const Card: React.FC<CardProps> = ({title, continent}) => {
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography className={classes.dataValue} variant='h5'>
+            <Typography
+              data-testid='total-recovered'
+              className={classes.dataValue}
+              variant='h5'
+            >
               {totalRecovered}
             </Typography>
             <Typography variant='caption' className={classes.caption}>
