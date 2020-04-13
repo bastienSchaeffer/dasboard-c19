@@ -1,22 +1,7 @@
 import clientRedis from './redis';
 import axios from 'axios';
 import {getWDMCovidContinents} from '../scraping/worldometers';
-
-export type Continent = {
-  name: string;
-  totalCases: number;
-  newCases: number;
-  totalDeaths: number;
-  newDeaths: number;
-  totalRecovered: number;
-  activeCases: number;
-  seriousCritical: number;
-  casesPerOneMillion: number;
-  deathsPerOneMillion: number;
-  totalTests: number;
-  testsPerOneMillion: number;
-  continent: string;
-};
+import {Continent} from '../../src/types';
 
 /*
  * Get the continents covid data
