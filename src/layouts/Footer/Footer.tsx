@@ -12,9 +12,7 @@ const Footer = () => {
   const classes = useStyles();
   return (
     <footer className={classes.container}>
-      <Typography variant='caption'>
-        Created with love for the environment - 2020.
-      </Typography>
+      <Typography variant='caption'>Created - 2020.</Typography>
     </footer>
   );
 };
