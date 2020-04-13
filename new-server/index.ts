@@ -3,7 +3,7 @@ import next from 'next';
 import {PORT} from './config/ports';
 
 import routesConfig from './config/routes';
-import {covidTimeSeriesAPIData} from './config/retrieveRedis';
+// import {covidTimeSeriesAPIData} from './config/retrieveRedis';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({dev});
@@ -15,9 +15,9 @@ app.prepare();
 // Routes: GET / POST
 routesConfig(server);
 
-// Populate from External CovidAPI
-covidTimeSeriesAPIData();
-setInterval(covidTimeSeriesAPIData, 600000);
+// // Populate from External CovidAPI
+// covidTimeSeriesAPIData();
+// setInterval(covidTimeSeriesAPIData, 600000);
 
 server.all('*', (req: Request, res: Response) => {
   return handle(req, res);

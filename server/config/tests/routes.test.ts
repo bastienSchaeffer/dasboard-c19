@@ -1,8 +1,8 @@
 const request = require('supertest');
 import {server} from '../../';
 
-describe('GET /url', () => {
-  it('responds with json', (done) => {
+describe('GET /url', function () {
+  it('responds with json', function (done) {
     request(server)
       .get('/url')
       .set('Accept', 'application/json')
@@ -11,50 +11,30 @@ describe('GET /url', () => {
   });
 });
 
-describe('GET /world', () => {
-  it('responds with json', (done) => {
+describe('GET /timeseries', function () {
+  it('responds with json', function (done) {
     request(server)
-      .get('/world')
+      .get('/timeseries')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
 });
 
-describe('GET /countries', () => {
-  it('responds with json', (done) => {
+describe('GET /latestCountries', function () {
+  it('responds with json', function (done) {
     request(server)
-      .get('/countries')
+      .get('/latestCountries')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
 });
 
-describe('GET /continents', () => {
-  it('responds with json', (done) => {
+describe('GET /dummyRedis', function () {
+  it('responds with json', function (done) {
     request(server)
-      .get('/continents')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-});
-
-describe('GET /timeline', () => {
-  it('responds with json', (done) => {
-    request(server)
-      .get('/timeline')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-});
-
-describe('GET /health', () => {
-  it('responds with json', (done) => {
-    request(server)
-      .get('/health')
+      .get('/dummyRedis')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
