@@ -6,7 +6,7 @@ const Topbar = () => {
     <AppBar>
       <Toolbar>
         <Typography gutterBottom variant='h1'>
-          New Dashboard Countries
+          New Dashboard Countries - step 2
         </Typography>
       </Toolbar>
     </AppBar>
