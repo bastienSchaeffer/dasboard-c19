@@ -16,12 +16,13 @@ type LineChartProps = {
 const PieChart: React.FC<LineChartProps> = () => {
   const theme = useTheme();
   const COLORS = [
+    theme.palette.graphs.main,
     theme.palette.primary.main,
+    theme.palette.info.main,
     theme.palette.error.main,
     theme.palette.warning.main,
     // theme.palette.graphs.main,
-    theme.palette.warning.main,
-    theme.palette.info.main,
+    // theme.palette.warning.main,
     theme.palette.success.main,
   ];
 

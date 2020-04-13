@@ -35,6 +35,7 @@ const LineChart: React.FC<LineChartProps> = ({
 
   const theme = useTheme();
   const COLORS = [
+    theme.palette.graphs.main,
     theme.palette.primary.main,
     // theme.palette.graphs.main,
     theme.palette.error.main,

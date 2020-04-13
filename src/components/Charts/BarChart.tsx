@@ -35,13 +35,13 @@ const BarChart: React.FC<BarChartProps> = ({
 
   const theme = useTheme();
   const COLORS = [
+    theme.palette.graphs.main,
     theme.palette.primary.main,
-    // theme.palette.graphs.main,
     theme.palette.error.main,
     theme.palette.warning.main,
     theme.palette.info.main,
     theme.palette.success.main,
-    theme.palette.warning.main,
+    // theme.palette.warning.main,
   ];
 
   return (
