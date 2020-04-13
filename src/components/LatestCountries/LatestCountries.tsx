@@ -17,6 +17,7 @@ import {Country} from '../../types';
 
 interface Data {
   name: string;
+  continent: string;
   population: number;
   percentage: number;
   totalCases: number;
@@ -66,6 +67,7 @@ interface HeadCell {
 
 const headCells: HeadCell[] = [
   {id: 'name', numeric: false, label: 'Country'},
+  {id: 'continent', numeric: false, label: 'Continent'},
   {id: 'population', numeric: true, label: 'Population'},
   {id: 'percentage', numeric: true, label: 'Percentage'},
   {id: 'totalCases', numeric: true, label: 'Cases'},
@@ -239,6 +241,7 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
                           alt={row.name}
                         />
                       </TableCell>
+                      <TableCell align='left'>{row.continent}</TableCell>
                       <TableCell align='right'>
                         {row.population}
                         <br />
