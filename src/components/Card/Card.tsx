@@ -6,6 +6,7 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import {Continent} from '../../types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -30,16 +31,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type CardProps = {
   title: string;
-  numberValue: number;
+  continent: Continent;
 };
 
-const Card: React.FC<CardProps> = ({title, numberValue}) => {
+const Card: React.FC<CardProps> = ({title, continent}) => {
   const classes = useStyles();
 
+  const {totalCases, totalDeaths, totalRecovered} = continent;
   return (
     <CardMUI className={classes.root}>
       <CardContent>
-        <Grid container justify='space-between' spacing={2}>
+        <Grid
+          container
+          justify='space-between'
+          alignItems='flex-end'
+          spacing={2}
+        >
           <Grid item xs={12}>
             <Typography variant='h2' className={classes.title}>
               {title}
@@ -56,18 +63,26 @@ const Card: React.FC<CardProps> = ({title, numberValue}) => {
 
           <Grid item xs={6}>
             <Typography className={classes.dataValue} variant='h2'>
-              {numberValue}
+              {totalCases}
+            </Typography>
+            <Typography variant='caption' className={classes.caption}>
+              TOTAL CASES
+            </Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography className={classes.dataValue} variant='h5'>
+              {totalDeaths}
             </Typography>
             <Typography variant='caption' className={classes.caption}>
               DEATHS
             </Typography>
           </Grid>
-          <Grid item xs={6}>
-            <Typography className={classes.dataValue} variant='h2'>
-              {numberValue}
+          <Grid item xs={3}>
+            <Typography className={classes.dataValue} variant='h5'>
+              {totalRecovered}
             </Typography>
             <Typography variant='caption' className={classes.caption}>
-              NEW CASES
+              RECOVERED
             </Typography>
           </Grid>
         </Grid>

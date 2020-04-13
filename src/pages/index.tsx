@@ -39,7 +39,23 @@ function IndexPage() {
     testsPerOneMillion: 0,
     continent: 'stringify',
   });
-  const [continents, setContinents] = useState([{name: 'm', totalCases: 0}]);
+  const [continents, setContinents] = useState([
+    {
+      name: 'stringify',
+      totalCases: 0,
+      newCases: 0,
+      totalDeaths: 0,
+      newDeaths: 0,
+      totalRecovered: 0,
+      activeCases: 0,
+      seriousCritical: 0,
+      casesPerOneMillion: 0,
+      deathsPerOneMillion: 0,
+      totalTests: 0,
+      testsPerOneMillion: 0,
+      continent: 'stringify',
+    },
+  ]);
   const [healthRedis, setHealthRedis] = useState({date: ''});
   const [latestCountries, setLatestCountries] = useState([]);
   const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
@@ -120,11 +136,7 @@ function IndexPage() {
             <Grid container justify='space-between'>
               {continents.map((item) => (
                 <Grid item xs={12} md={6}>
-                  <Card
-                    title={item.name}
-                    numberValue={item.totalCases}
-                    key={item.name}
-                  />
+                  <Card title={item.name} continent={item} key={item.name} />
                 </Grid>
               ))}
             </Grid>
