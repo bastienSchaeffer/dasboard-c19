@@ -50,7 +50,6 @@ export default {
   background: {
     // default: '#F4F6F8',
     default: '#f4faff',
-    // default: colors.yellow[500],
     paper: white,
   },
   icon: colors.blueGrey[600],
