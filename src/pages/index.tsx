@@ -11,11 +11,6 @@ const Continents = dynamic(import('../components/Continents'));
 const Countries = dynamic(import('../components/Countries'));
 const Country = dynamic(import('../components/Country'));
 const ErrorBoundary = dynamic(import('../components/ErrorBoundary'));
-// import Global from '../components/Global';
-// import Continents from '../components/Continents';
-// import Countries from '../components/Countries';
-// import Country from '../components/Country';
-// import ErrorBoundary from '../components/ErrorBoundary';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const IndexPage: React.FC = ({health, world, continents}: any) => {
+const IndexPage: React.FC = ({health, world, continents, countries}: any) => {
   const classes = useStyles();
   console.log(world);
   return (
@@ -53,7 +48,7 @@ const IndexPage: React.FC = ({health, world, continents}: any) => {
                 <Continents continents={continents} />
               </Grid>
               <Grid item xs={12}>
-                <Countries />
+                <Countries countries={countries} />
               </Grid>
               <Grid item xs={12}>
                 <Country />
@@ -79,12 +74,18 @@ export async function getStaticProps() {
     'https://dashboard-c19.herokuapp.com/continents'
   );
   const jsonContinents = await resContinents.json(); // better use it inside try .. catch
+  // Countries
+  const resCountries = await fetch(
+    'https://dashboard-c19.herokuapp.com/countries'
+  );
+  const jsonCountries = await resCountries.json(); // better use it inside try .. catch
 
   return {
     props: {
       health: jsonHealth,
       world: jsonWorld,
       continents: jsonContinents,
+      countries: jsonCountries,
     },
   };
 }

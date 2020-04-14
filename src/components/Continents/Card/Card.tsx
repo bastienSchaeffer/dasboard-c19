@@ -32,7 +32,6 @@ type CardProps = {
 
 const Card: React.FC<CardProps> = ({continent, color}) => {
   const classes = useStyles();
-  console.log(color);
   const {name, totalCases, totalDeaths, totalRecovered} = continent;
   return (
     <CardMUI
