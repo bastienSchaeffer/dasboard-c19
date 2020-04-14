@@ -31,7 +31,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const IndexPage: React.FC = ({health, world, continents, countries}: any) => {
+const IndexPage: React.FC = ({
+  health,
+  world,
+  continents,
+  countries,
+  timeline,
+}: any) => {
   const classes = useStyles();
   console.log(world);
   return (
@@ -51,7 +57,7 @@ const IndexPage: React.FC = ({health, world, continents, countries}: any) => {
                 <Countries countries={countries} />
               </Grid>
               <Grid item xs={12}>
-                <Country />
+                <Country timeline={timeline} />
               </Grid>
             </>
           </ErrorBoundary>
@@ -78,7 +84,12 @@ export async function getStaticProps() {
   const resCountries = await fetch(
     'https://dashboard-c19.herokuapp.com/countries'
   );
-  const jsonCountries = await resCountries.json(); // better use it inside try .. catch
+  const jsonCountries = await resCountries.json();
+  // Timeline
+  const resTimeline = await fetch(
+    'https://dashboard-c19.herokuapp.com/timeline'
+  );
+  const jsonTimeline = await resTimeline.json(); // better use it inside try .. catch
 
   return {
     props: {
@@ -86,6 +97,7 @@ export async function getStaticProps() {
       world: jsonWorld,
       continents: jsonContinents,
       countries: jsonCountries,
+      timeline: jsonTimeline,
     },
   };
 }

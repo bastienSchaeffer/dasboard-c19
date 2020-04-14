@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Grid,
   Card as CardMUI,
@@ -12,18 +12,22 @@ import DiscreteSlider from '../Slider/Slider';
 import useGraphColors from '../Charts/useGraphColors';
 import {HeaderSection} from '../Header';
 
-const Country = () => {
+type CountryProps = {
+  timeline: any;
+};
+
+const Country: React.FC<CountryProps> = ({timeline}) => {
   const [selectedCountry] = useState('USA');
   const [selectedCountryCode] = useState('US');
   const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
-  const [timeline, setTimeline] = useState({});
+  // const [timeline, setTimeline] = useState({});
   const {GraphColorsKey} = useGraphColors();
 
-  useEffect(() => {
-    fetch('/timeline')
-      .then((response) => response.json())
-      .then((response) => setTimeline(response));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/timeline')
+  //     .then((response) => response.json())
+  //     .then((response) => setTimeline(response));
+  // }, []);
 
   return (
     <Grid container spacing={4}>
