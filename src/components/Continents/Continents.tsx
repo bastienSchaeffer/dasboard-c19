@@ -1,12 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Grid} from '@material-ui/core';
 import {Card} from './Card';
 import {PieChart} from '../Charts';
 import {Continent} from '../../types';
 import {HeaderSection} from '../Header';
 
-const Continents = () => {
-  const [continents, setContinents] = useState<Continent[]>([]);
+type ContinentsProps = {
+  continents: Continent[];
+};
+
+const Continents: React.FC<ContinentsProps> = ({continents}) => {
   const colorsContinent = [
     '#46CBF9',
     '#39A7D3',
@@ -15,12 +18,6 @@ const Continents = () => {
     '#103C60',
     '#03183A',
   ];
-
-  useEffect(() => {
-    fetch('/continents')
-      .then((response) => response.json())
-      .then((response) => setContinents(response));
-  }, []);
 
   return (
     <Grid container spacing={6} alignItems='center'>
@@ -35,11 +32,12 @@ const Continents = () => {
       </Grid>
       <Grid item xs={12} md={8}>
         <Grid container justify='space-between' spacing={2}>
-          {continents.map((item, index) => (
-            <Grid item xs={12} md={6} key={item.name}>
-              <Card continent={item} color={colorsContinent[index]} />
-            </Grid>
-          ))}
+          {continents &&
+            continents.map((item, index) => (
+              <Grid item xs={12} md={6} key={item.name}>
+                <Card continent={item} color={colorsContinent[index]} />
+              </Grid>
+            ))}
         </Grid>
       </Grid>
     </Grid>

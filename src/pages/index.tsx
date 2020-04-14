@@ -36,22 +36,21 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const IndexPage: React.FC = ({stars}: any) => {
+const IndexPage: React.FC = ({health, world, continents}: any) => {
   const classes = useStyles();
-
+  console.log(world);
   return (
     <MainLayout>
       <Helmet title='Dashboard Countries' />
       <div className={classes.container}>
         <Grid container spacing={4}>
           <ErrorBoundary>
-            <p>Next.js has {JSON.stringify(stars, null, 2)} ⭐️</p>
             <>
               <Grid item xs={12}>
-                <Global />
+                <Global health={health} world={world} />
               </Grid>
               <Grid item xs={12}>
-                <Continents />
+                <Continents continents={continents} />
               </Grid>
               <Grid item xs={12}>
                 <Countries />
@@ -68,11 +67,24 @@ const IndexPage: React.FC = ({stars}: any) => {
 };
 
 export async function getStaticProps() {
-  const res = await fetch('https://dashboard-c19.herokuapp.com/countries');
-  const json = await res.json(); // better use it inside try .. catch
+  // const res = await fetch('https://dashboard-c19.herokuapp.com/countries');
+  // Health
+  const resHealth = await fetch('https://dashboard-c19.herokuapp.com/health');
+  const jsonHealth = await resHealth.json(); // better use it inside try .. catch
+  // World
+  const resWorld = await fetch('https://dashboard-c19.herokuapp.com/world');
+  const jsonWorld = await resWorld.json();
+  // Continents
+  const resContinents = await fetch(
+    'https://dashboard-c19.herokuapp.com/continents'
+  );
+  const jsonContinents = await resContinents.json(); // better use it inside try .. catch
+
   return {
     props: {
-      stars: json,
+      health: jsonHealth,
+      world: jsonWorld,
+      continents: jsonContinents,
     },
   };
 }
