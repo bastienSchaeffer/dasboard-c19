@@ -5,12 +5,19 @@ import {Helmet} from 'react-helmet';
 import fetch from 'node-fetch';
 import {Grid} from '@material-ui/core';
 
-import dynamic from 'next/dynamic';
-const Global = dynamic(import('../components/Global'));
-const Continents = dynamic(import('../components/Continents'));
-const Countries = dynamic(import('../components/Countries'));
+// import dynamic from 'next/dynamic';
+// const Global = dynamic(import('../components/Global'));
+// const Continents = dynamic(import('../components/Continents'));
+// const Countries = dynamic(import('../components/Countries'));
 // const Country = dynamic(import('../components/Country'));
-const ErrorBoundary = dynamic(import('../components/ErrorBoundary'));
+// const ErrorBoundary = dynamic(import('../components/ErrorBoundary'));
+
+import ErrorBoundary from '../components/ErrorBoundary';
+import Global from '../components/Global';
+import Continents from '../components/Continents';
+import Countries from '../components/Countries';
+import Country from '../components/Country';
+import {Continent} from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,9 +38,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const IndexPage: React.FC = ({health, world, continents}: any) => {
+type Health = {
+  origin: string;
+  date: string;
+};
+
+type IndexProps = {
+  health: Health;
+  world: Continent;
+  continents: Continent[];
+};
+
+const IndexPage: React.FC<IndexProps> = ({continents}) => {
   const classes = useStyles();
-  console.log(world);
   return (
     <MainLayout>
       <Helmet title='Dashboard Countries' />
@@ -42,7 +59,7 @@ const IndexPage: React.FC = ({health, world, continents}: any) => {
           <ErrorBoundary>
             <>
               <Grid item xs={12}>
-                <Global health={health} world={world} />
+                <Global />
               </Grid>
               <Grid item xs={12}>
                 <Continents continents={continents} />
@@ -50,9 +67,9 @@ const IndexPage: React.FC = ({health, world, continents}: any) => {
               <Grid item xs={12}>
                 <Countries />
               </Grid>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <Country />
-              </Grid> */}
+              </Grid>
             </>
           </ErrorBoundary>
         </Grid>
@@ -61,14 +78,14 @@ const IndexPage: React.FC = ({health, world, continents}: any) => {
   );
 };
 
-export async function getStaticProps() {
-  // const res = await fetch('https://dashboard-c19.herokuapp.com/countries');
-  // Health
-  const resHealth = await fetch('https://dashboard-c19.herokuapp.com/health');
-  const jsonHealth = await resHealth.json(); // better use it inside try .. catch
-  // World
-  const resWorld = await fetch('https://dashboard-c19.herokuapp.com/world');
-  const jsonWorld = await resWorld.json();
+export async function getServerSideProps() {
+  // // const res = await fetch('https://dashboard-c19.herokuapp.com/countries');
+  // // Health
+  // const resHealth = await fetch('https://dashboard-c19.herokuapp.com/health');
+  // const jsonHealth = await resHealth.json(); // better use it inside try .. catch
+  // // World
+  // const resWorld = await fetch('https://dashboard-c19.herokuapp.com/world');
+  // const jsonWorld = await resWorld.json();
   // Continents
   const resContinents = await fetch(
     'https://dashboard-c19.herokuapp.com/continents'
@@ -77,8 +94,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      health: jsonHealth,
-      world: jsonWorld,
+      // health: jsonHealth,
+      // world: jsonWorld,
       continents: jsonContinents,
     },
   };
