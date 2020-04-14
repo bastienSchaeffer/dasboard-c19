@@ -150,7 +150,7 @@ const useStyles = makeStyles(() =>
 );
 
 type LatestCountriesProps = {
-  countries: Array<Country>;
+  countries: Country[];
   setSelectedCountry: any;
   setSelectedCountryCode: any;
 };

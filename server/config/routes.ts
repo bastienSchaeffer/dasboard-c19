@@ -14,7 +14,7 @@ export default (app: Application) => {
   // -------------------------------
 
   app.get('/world', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('world', (err: Errback, result: any) => {
+    return clientRedis.get('world', (err: Errback, result: string) => {
       if (err) throw err;
       // If that key exist in Redis store
       if (result) {
@@ -28,7 +28,7 @@ export default (app: Application) => {
   app.get(
     '/continents',
     (_req: Request, res: Response, _next: NextFunction) => {
-      return clientRedis.get('continents', (err: Errback, result: any) => {
+      return clientRedis.get('continents', (err: Errback, result: string) => {
         if (err) throw err;
         // If that key exist in Redis store
         if (result) {
@@ -41,7 +41,7 @@ export default (app: Application) => {
   );
 
   app.get('/countries', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('countries', (err: Errback, result: any) => {
+    return clientRedis.get('countries', (err: Errback, result: string) => {
       if (err) throw err;
       // If that key exist in Redis store
       if (result) {
@@ -53,7 +53,7 @@ export default (app: Application) => {
   });
 
   app.get('/timeline', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('timeline', (err: Errback, result: any) => {
+    return clientRedis.get('timeline', (err: Errback, result: string) => {
       if (err) throw err;
       // If that key exist in Redis store
       if (result) {
@@ -65,7 +65,7 @@ export default (app: Application) => {
   });
 
   app.get('/health', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('health', (err: Errback, result: any) => {
+    return clientRedis.get('health', (err: Errback, result: string) => {
       if (err) throw err;
 
       if (result) {

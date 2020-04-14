@@ -3,18 +3,16 @@ import {Grid} from '@material-ui/core';
 import {CardToday} from './Card';
 import {Continent} from '../../types';
 import {HeaderSection} from '../Header';
+import Loader from '../Loader';
 
-// type GlobalProps = {
-//   health: {
-//     date: string;
-//   };
-//   world: Continent;
-// };
+type Health = {
+  origin?: string;
+  date: string;
+};
 
-// const Global: React.FC<GlobalProps> = ({health, world}) => {
-const Global = () => {
+const Global: React.FC = () => {
   const [world, setWorld] = React.useState<Continent>();
-  const [healthRedis, setHealthRedis] = useState({date: ''});
+  const [healthRedis, setHealthRedis] = useState<Health>({date: ''});
 
   useEffect(() => {
     fetch('/health')
@@ -41,7 +39,13 @@ const Global = () => {
 
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          {world && <CardToday continent={world} />}
+          {world ? (
+            <CardToday continent={world} />
+          ) : (
+            <Grid item xs={12}>
+              <Loader />
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </>

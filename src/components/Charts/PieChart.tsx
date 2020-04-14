@@ -24,8 +24,8 @@ const PieChart: React.FC<PieChartProps> = ({dataSet, colors}) => {
           verticalAlign='bottom'
         />
         <Pie
-          startAngle={40}
-          endAngle={330}
+          startAngle={330}
+          endAngle={40}
           data={dataSet}
           cx={'50%'}
           cy={160}

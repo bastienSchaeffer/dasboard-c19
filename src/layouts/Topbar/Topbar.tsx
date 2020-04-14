@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-var dt = new Date();
-var options = {
+const dt = new Date();
+const options = {
   timeZone: 'UTC',
   hour12: false,
   weekday: 'long',

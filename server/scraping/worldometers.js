@@ -33,34 +33,36 @@ const getNumberValue = (value) => {
  * @param {func} configLabels.format - format extracted data value (getTextValue | getNumberValue)
  */
 const scrapMainTable = ({urlToScrap, domSelector, configLabels}) => {
-  console.log(`urlToScrap: ${urlToScrap}`);
-  return axios(urlToScrap)
-    .then((response) => {
-      const $ = cheerio.load(response.data, CHEERIO_CONFIG);
-      const body = [];
+  return (
+    axios(urlToScrap)
+      .then((response) => {
+        const $ = cheerio.load(response.data, CHEERIO_CONFIG);
+        const body = [];
 
-      $(domSelector).each((index, item) => {
-        // collect row cells
-        const rowCells = [];
-        $(item)
-          .children('td')
-          .text((index, item) => rowCells.push(item));
+        $(domSelector).each((index, item) => {
+          // collect row cells
+          const rowCells = [];
+          $(item)
+            .children('td')
+            .text((indexTd, itemTd) => rowCells.push(itemTd));
 
-        // format object to pass:
-        const row = rowCells.reduce((acc, item, index) => {
-          const {label, format} = configLabels[index];
-          return {...acc, [label]: format(item)};
-        }, {});
+          // format object to pass:
+          const row = rowCells.reduce((acc, itemRowCell, indexRowCell) => {
+            const {label, format} = configLabels[indexRowCell];
+            return {...acc, [label]: format(itemRowCell)};
+          }, {});
 
-        // @todo: params required in labels
-        if (row.name) {
-          body.push(row);
-        }
-      });
+          // @todo: params required in labels
+          if (row.name) {
+            body.push(row);
+          }
+        });
 
-      return body;
-    })
-    .catch(console.error);
+        return body;
+      })
+      //tslint:disable-next-line no-console
+      .catch(console.error)
+  );
 };
 
 const labelsCovid = [

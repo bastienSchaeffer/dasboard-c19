@@ -26,9 +26,7 @@ const getContinents = async () => {
   // Remove world retrieved as continent
   const withoutWorld = data
     .filter((continent: Continent) => continent.continent !== 'All')
-    .sort(function (a: any, b: any) {
-      return b.totalCases - a.totalCases;
-    });
+    .sort((a: Continent, b: Continent) => b.totalCases - a.totalCases);
   clientRedis.set('continents', JSON.stringify(withoutWorld));
 };
 
@@ -66,7 +64,7 @@ const getCountries = async () => {
         countriesCovid,
         countryCodes,
         population
-      ).sort((a: any, b: any) => b.cases - a.cases);
+      ).sort((a, b) => b.totalCases - a.totalCases);
       clientRedis.set('countries', JSON.stringify(enhancedCountries));
     })
   );

@@ -22,7 +22,6 @@ type CountryDetail = {
   [k: string]: any;
 };
 
-//---------
 type DayCovid = {
   date: string;
   confirmed: number;
@@ -31,11 +30,11 @@ type DayCovid = {
 };
 
 type Timeline = {
-  [k: string]: Array<DayCovid>;
+  [k: string]: DayCovid[];
 };
 
 // transform array to object
-const hashCountriesDetails = (countriesDetails: Array<CountryDetail>) =>
+const hashCountriesDetails = (countriesDetails: CountryDetail[]) =>
   countriesDetails.reduce(
     (acc: {[name: string]: CountryDetail}, item: CountryDetail) => ({
       ...acc,
@@ -63,8 +62,8 @@ const getPercentage = (total: number, amount: number): number =>
 
 // Merge flags and covid
 const enhanceCountries = (
-  countriesDetails: Array<CountryDetail>,
-  countriesCovid: Array<CountryCovid>,
+  countriesDetails: CountryDetail[],
+  countriesCovid: CountryCovid[],
   countryCodes: CountryCodes,
   population: any
 ) => {
@@ -72,7 +71,7 @@ const enhanceCountries = (
   const dictionaryPopulation = hashPopulation(population, countryCodes);
 
   return countriesCovid.reduce(
-    (acc: Array<CountryCovid>, countryItem: CountryCovid) => {
+    (acc: CountryCovid[], countryItem: CountryCovid) => {
       const {totalCases, name} = countryItem;
       const countryCode = countryCodes[name];
 

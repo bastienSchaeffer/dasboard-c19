@@ -2,7 +2,7 @@ import React from 'react';
 import {MainLayout} from '../layouts';
 import {Theme, makeStyles, createStyles} from '@material-ui/core/styles';
 import {Helmet} from 'react-helmet';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 import {Grid} from '@material-ui/core';
 
 // import dynamic from 'next/dynamic';
@@ -17,7 +17,6 @@ import Global from '../components/Global';
 import Continents from '../components/Continents';
 import Countries from '../components/Countries';
 import Country from '../components/Country';
-import {Continent} from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,18 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type Health = {
-  origin: string;
-  date: string;
-};
-
-type IndexProps = {
-  health: Health;
-  world: Continent;
-  continents: Continent[];
-};
-
-const IndexPage: React.FC<IndexProps> = ({continents}) => {
+const IndexPage: React.FC = () => {
   const classes = useStyles();
   return (
     <MainLayout>
@@ -62,7 +50,7 @@ const IndexPage: React.FC<IndexProps> = ({continents}) => {
                 <Global />
               </Grid>
               <Grid item xs={12}>
-                <Continents continents={continents} />
+                <Continents />
               </Grid>
               <Grid item xs={12}>
                 <Countries />
@@ -77,28 +65,5 @@ const IndexPage: React.FC<IndexProps> = ({continents}) => {
     </MainLayout>
   );
 };
-
-export async function getServerSideProps() {
-  // // const res = await fetch('https://dashboard-c19.herokuapp.com/countries');
-  // // Health
-  // const resHealth = await fetch('https://dashboard-c19.herokuapp.com/health');
-  // const jsonHealth = await resHealth.json(); // better use it inside try .. catch
-  // // World
-  // const resWorld = await fetch('https://dashboard-c19.herokuapp.com/world');
-  // const jsonWorld = await resWorld.json();
-  // Continents
-  const resContinents = await fetch(
-    'https://dashboard-c19.herokuapp.com/continents'
-  );
-  const jsonContinents = await resContinents.json(); // better use it inside try .. catch
-
-  return {
-    props: {
-      // health: jsonHealth,
-      // world: jsonWorld,
-      continents: jsonContinents,
-    },
-  };
-}
 
 export default IndexPage;

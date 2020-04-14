@@ -27,20 +27,20 @@ const LineChart: React.FC<LineChartProps> = ({
   daysSelected,
   config,
 }) => {
-  const [data, setData] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     let data = dataSet[countryCode];
     if (data && data.length) {
       data = data.slice(daysSelected[0], daysSelected[1]);
     }
-    setData(data);
+    setChartData(data);
   }, [dataSet, countryCode, daysSelected]);
 
   return (
     <ResponsiveContainer width='100%' height={360} debounce={0}>
       <LineChartRecharts
-        data={data}
+        data={chartData}
         margin={{top: 20, right: 50, left: 0, bottom: 20}}
       >
         <XAxis dataKey='date' />

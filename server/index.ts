@@ -17,7 +17,7 @@ routesConfig(server);
 
 // Populate from External CovidAPI
 covidTimeSeriesAPIData();
-setInterval(covidTimeSeriesAPIData, 30000);
+setInterval(covidTimeSeriesAPIData, 600000);
 
 server.all('*', (req: Request, res: Response) => {
   return handle(req, res);
