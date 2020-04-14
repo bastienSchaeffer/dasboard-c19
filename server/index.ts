@@ -1,4 +1,4 @@
-import express, {Request, Response} from 'express';
+import express, {Request, Response, Errback} from 'express';
 import next from 'next';
 import {PORT} from './config/ports';
 
@@ -17,13 +17,13 @@ routesConfig(server);
 
 // Populate from External CovidAPI
 covidTimeSeriesAPIData();
-setInterval(covidTimeSeriesAPIData, 600000);
+setInterval(covidTimeSeriesAPIData, 30000);
 
 server.all('*', (req: Request, res: Response) => {
   return handle(req, res);
 });
 
-server.listen(PORT, (err?: any) => {
+server.listen(PORT, (err?: Errback) => {
   if (err) throw err;
   console.log(`> Ready on localhost:${PORT} - env ${process.env.NODE_ENV}`);
 });
