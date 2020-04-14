@@ -8,7 +8,7 @@ import {Grid} from '@material-ui/core';
 import dynamic from 'next/dynamic';
 const Global = dynamic(import('../components/Global'));
 const Continents = dynamic(import('../components/Continents'));
-// const Countries = dynamic(import('../components/Countries'));
+const Countries = dynamic(import('../components/Countries'));
 // const Country = dynamic(import('../components/Country'));
 const ErrorBoundary = dynamic(import('../components/ErrorBoundary'));
 
@@ -47,10 +47,10 @@ const IndexPage: React.FC = ({health, world, continents}: any) => {
               <Grid item xs={12}>
                 <Continents continents={continents} />
               </Grid>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <Countries />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Country />
               </Grid> */}
             </>
