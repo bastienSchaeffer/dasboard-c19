@@ -2,7 +2,7 @@ import React from 'react';
 import {MainLayout} from '../layouts';
 import {Theme, makeStyles, createStyles} from '@material-ui/core/styles';
 import {Helmet} from 'react-helmet';
-
+import fetch from 'node-fetch';
 import {Grid} from '@material-ui/core';
 
 import dynamic from 'next/dynamic';
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const IndexPage: React.FC = () => {
+const IndexPage: React.FC = ({stars}: any) => {
   const classes = useStyles();
 
   return (
@@ -45,6 +45,7 @@ const IndexPage: React.FC = () => {
       <div className={classes.container}>
         <Grid container spacing={4}>
           <ErrorBoundary>
+            <p>Next.js has {JSON.stringify(stars, null, 2)} ⭐️</p>
             <>
               <Grid item xs={12}>
                 <Global />
@@ -65,5 +66,15 @@ const IndexPage: React.FC = () => {
     </MainLayout>
   );
 };
+
+export async function getStaticProps() {
+  const res = await fetch('https://dashboard-c19.herokuapp.com/countries');
+  const json = await res.json(); // better use it inside try .. catch
+  return {
+    props: {
+      stars: json,
+    },
+  };
+}
 
 export default IndexPage;
