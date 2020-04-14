@@ -1,16 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Grid} from '@material-ui/core';
 import {LatestCountries} from '../LatestCountries';
 import {HeaderSection} from '../Header';
-import {Country} from '../../types';
 
-type CountriesProps = {
-  countries: Country[];
-};
-
-const Countries: React.FC<CountriesProps> = ({countries}) => {
+const Countries = () => {
   const [, setSelectedCountry] = useState('USA');
   const [, setSelectedCountryCode] = useState('US');
+  const [latestCountries, setLatestCountries] = useState([]);
+
+  useEffect(() => {
+    fetch('/countries')
+      .then((response) => response.json())
+      .then((response) => setLatestCountries(response));
+  }, []);
 
   return (
     <Grid container spacing={4}>
@@ -22,7 +24,7 @@ const Countries: React.FC<CountriesProps> = ({countries}) => {
       </Grid>
       <Grid item lg={12} md={12} xl={9} xs={12}>
         <LatestCountries
-          countries={countries}
+          countries={latestCountries}
           setSelectedCountry={setSelectedCountry}
           setSelectedCountryCode={setSelectedCountryCode}
         />
