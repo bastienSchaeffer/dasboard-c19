@@ -21,9 +21,16 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       backgroundColor: theme.palette.background.default,
-      // background: 'linear-gradient(180deg, #e0f1ff 30%, #05A9F4 90%)',
-      padding: theme.spacing(6),
       height: '100%',
+      padding: theme.spacing(2),
+
+      [theme.breakpoints.up('md')]: {
+        padding: theme.spacing(3),
+      },
+
+      [theme.breakpoints.up('lg')]: {
+        padding: theme.spacing(4),
+      },
     },
   })
 );
@@ -71,26 +78,37 @@ const IndexPage: React.FC = () => {
   }, []);
 
   const style = {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    //FF008C
+    background: 'linear-gradient(45deg, #F75108 30%, #FF008C 90%)',
     // background: 'linear-gradient(45deg, #01579B 30%, #05A9F4 90%)',
     borderRadius: 3,
     border: 0,
     color: 'white',
     height: 48,
-    marginTop: '80px',
-    padding: '3px 15px',
+    marginTop: '100px',
+    padding: '4px 8px',
     fontWeight: 600,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: '0 3px 5px 2px rgba(247, 81, 8, .3)',
     // boxShadow: '0 3px 5px 2px rgba(1, 87, 155, .3)',
   };
+
+  const colorsContinent = [
+    '#46CBF9',
+    '#39A7D3',
+    '#2B83AD',
+    '#1E6086',
+    '#103C60',
+    '#03183A',
+  ];
+
   return (
     <MainLayout>
       <Helmet title='Dashboard Countries' />
       <div className={classes.container}>
-        <Grid container spacing={4}>
+        <Grid container spacing={6}>
           <Grid item xs={12}>
             <Typography variant='h1' color='inherit'>
-              April, 3rd 2020
+              Global
             </Typography>
             <Typography variant='caption' color='inherit' style={style}>
               REDIS UPDATE: {healthRedis.date}
@@ -98,21 +116,33 @@ const IndexPage: React.FC = () => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={6}>
           <Grid item xs={12}>
             {world && <CardToday continent={world} />}
           </Grid>
         </Grid>
 
-        <Grid container spacing={4} alignItems='center'>
+        <Grid container spacing={6} alignItems='center'>
+          <Grid item xs={12}>
+            <Typography variant='h1' color='inherit'>
+              Continents
+            </Typography>
+            <Typography variant='caption' color='inherit' style={style}>
+              Filter data in array, select and check graphs
+            </Typography>
+          </Grid>
           <Grid item xs={12} md={4}>
-            <PieChart dataSet={continents} />
+            <PieChart dataSet={continents} colors={colorsContinent} />
           </Grid>
           <Grid item xs={12} md={8}>
-            <Grid container justify='space-between'>
-              {continents.map((item) => (
+            <Grid container justify='space-between' spacing={2}>
+              {continents.map((item, index) => (
                 <Grid item xs={12} md={6}>
-                  <Card continent={item} key={item.name} />
+                  <Card
+                    continent={item}
+                    key={item.name}
+                    color={colorsContinent[index]}
+                  />
                 </Grid>
               ))}
             </Grid>
@@ -120,7 +150,12 @@ const IndexPage: React.FC = () => {
         </Grid>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography variant='h2'>World</Typography>
+            <Typography variant='h1' color='inherit'>
+              Countries
+            </Typography>
+            <Typography variant='caption' color='inherit' style={style}>
+              Filter data in array, select and check graphs
+            </Typography>
           </Grid>
           <Grid item lg={12} md={12} xl={9} xs={12}>
             <LatestCountries
@@ -130,7 +165,12 @@ const IndexPage: React.FC = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant='h2'>{selectedCountry}</Typography>
+            <Typography variant='h1' color='inherit'>
+              Country: {selectedCountry}
+            </Typography>
+            <Typography variant='caption' color='inherit' style={style}>
+              Country data with range of days
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <DiscreteSlider steps={81} setDaysSelected={setDaysSelected} />

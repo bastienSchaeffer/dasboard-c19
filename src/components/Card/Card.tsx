@@ -27,14 +27,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type CardProps = {
   continent: Continent;
+  color: string;
 };
 
-const Card: React.FC<CardProps> = ({continent}) => {
+const Card: React.FC<CardProps> = ({continent, color}) => {
   const classes = useStyles();
-
+  console.log(color);
   const {name, totalCases, totalDeaths, totalRecovered} = continent;
   return (
-    <CardMUI className={classes.root}>
+    <CardMUI
+      className={classes.root}
+      style={{borderLeft: `solid 10px ${color}`}}
+    >
       <CardContent>
         <Grid
           container

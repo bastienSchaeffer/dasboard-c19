@@ -27,13 +27,7 @@ const getContinents = async () => {
   const withoutWorld = data
     .filter((continent: Continent) => continent.continent !== 'All')
     .sort(function (a: any, b: any) {
-      if (a.continent < b.continent) {
-        return -1;
-      }
-      if (a.continent > b.continent) {
-        return 1;
-      }
-      return 0;
+      return b.totalCases - a.totalCases;
     });
   clientRedis.set('continents', JSON.stringify(withoutWorld));
 };
