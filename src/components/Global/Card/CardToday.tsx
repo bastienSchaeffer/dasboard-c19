@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {Grid, Typography, Paper} from '@material-ui/core';
-import {Continent} from '../../types';
+import {Continent} from '../../../types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

@@ -6,7 +6,7 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import {Continent} from '../../types';
+import {Continent} from '../../../types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

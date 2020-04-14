@@ -51,7 +51,7 @@ const BarChart: React.FC<BarChartProps> = ({
         <Legend />
 
         {config.map((item) => (
-          <Bar dataKey={item.key} fill={item.color} />
+          <Bar key={item.key} dataKey={item.key} fill={item.color} />
         ))}
       </BarChartRecharts>
     </ResponsiveContainer>

@@ -50,6 +50,7 @@ const LineChart: React.FC<LineChartProps> = ({
         <Legend />
         {config.map((item) => (
           <Line
+            key={item.key}
             type='monotone'
             dataKey={item.key}
             stroke={item.color}
