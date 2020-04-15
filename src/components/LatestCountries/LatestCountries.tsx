@@ -236,7 +236,8 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
                         {row.name}
                         <br />
                         <img
-                          src={row.flag}
+                          // src={row.flag}
+                          src={`../../flags/${row.countryCode.toLowerCase()}.svg`}
                           style={{maxWidth: 50}}
                           alt={row.name}
                         />

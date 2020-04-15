@@ -19,6 +19,7 @@ routesConfig(server);
 covidTimeSeriesAPIData();
 setInterval(covidTimeSeriesAPIData, 600000);
 
+server.use('/flags', express.static('flags'));
 server.all('*', (req: Request, res: Response) => {
   return handle(req, res);
 });
