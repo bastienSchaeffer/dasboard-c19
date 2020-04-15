@@ -19,7 +19,7 @@ const Countries = () => {
       <Grid item xs={12}>
         <HeaderSection
           title={`Countries`}
-          caption={`Filter data in array, select and check graphs`}
+          caption={`Filter data in array, select and check the graphs`}
         />
       </Grid>
       <Grid item lg={12} md={12} xl={9} xs={12}>
