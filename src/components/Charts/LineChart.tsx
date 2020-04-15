@@ -25,16 +25,17 @@ const LineChart: React.FC<LineChartProps> = ({
   daysSelected,
   config,
 }) => {
-  const [chartData, setChartData] = useState([]);
+  // const [chartData, setChartData] = useState([]);
 
-  useEffect(() => {
-    let data = dataSet;
-    if (data && data.length) {
-      data = data.slice(daysSelected[0], daysSelected[1]);
-    }
-    setChartData(data);
-  }, [dataSet, daysSelected]);
+  // useEffect(() => {
+  //   let data = dataSet;
+  //   if (data && data.length) {
+  //     data = data.slice(daysSelected[0], daysSelected[1]);
+  //   }
+  //   setChartData(data);
+  // }, [dataSet, daysSelected]);
 
+  console.log('Linecharts');
   return (
     <div>
       {/* {config.map((item) => (
@@ -51,7 +52,8 @@ const LineChart: React.FC<LineChartProps> = ({
         ))} */}
       <pre>
         {JSON.stringify(config, null, 2)}
-        {JSON.stringify(chartData, null, 2)}
+        {JSON.stringify(daysSelected, null, 2)}
+        {JSON.stringify(dataSet, null, 2)}
       </pre>
     </div>
 
