@@ -9,14 +9,14 @@ import {
 
 // import {LineChart, BarChart} from '../Charts';
 import {LineChart} from '../Charts';
-import DiscreteSlider from '../Slider/Slider';
+// import DiscreteSlider from '../Slider/Slider';
 import useGraphColors from '../Charts/useGraphColors';
 import {HeaderSection} from '../Header';
 
 const Country = () => {
   const [selectedCountry] = useState('USA');
   const [selectedCountryCode] = useState('US');
-  const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
+  const [daysSelected] = React.useState<number[]>([20, 37]);
   const [timeline, setTimeline] = useState({});
   const {GraphColorsKey} = useGraphColors();
 
@@ -34,9 +34,9 @@ const Country = () => {
           caption={`Country data with range of days`}
         />
       </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <DiscreteSlider steps={81} setDaysSelected={setDaysSelected} />
-      </Grid>
+      </Grid> */}
       <Grid item lg={12} md={12} xl={12} xs={12}>
         <CardMUI>
           <CardHeader title='Total Cases Evolution' />
