@@ -7,7 +7,8 @@ import {
   CardContent,
 } from '@material-ui/core';
 
-import {LineChart, BarChart} from '../Charts';
+// import {LineChart, BarChart} from '../Charts';
+import {LineChart} from '../Charts';
 import DiscreteSlider from '../Slider/Slider';
 import useGraphColors from '../Charts/useGraphColors';
 import {HeaderSection} from '../Header';
@@ -36,7 +37,7 @@ const Country = () => {
       <Grid item xs={12}>
         <DiscreteSlider steps={81} setDaysSelected={setDaysSelected} />
       </Grid>
-      <Grid item lg={6} md={6} xl={12} xs={12}>
+      <Grid item lg={12} md={12} xl={12} xs={12}>
         <CardMUI>
           <CardHeader title='Total Cases Evolution' />
           <Divider />
@@ -50,7 +51,7 @@ const Country = () => {
           </CardContent>
         </CardMUI>
       </Grid>
-      <Grid item lg={6} md={6} xl={12} xs={12}>
+      {/* <Grid item lg={6} md={6} xl={12} xs={12}>
         <CardMUI>
           <CardHeader title='Total Deaths And Recovery Evolution' />
           <Divider />
@@ -66,7 +67,7 @@ const Country = () => {
             />
           </CardContent>
         </CardMUI>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };
