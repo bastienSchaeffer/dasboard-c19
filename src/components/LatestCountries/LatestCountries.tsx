@@ -273,4 +273,4 @@ const LatestCountries: React.FC<LatestCountriesProps> = ({
   );
 };
 
-export default React.memo(LatestCountries);
+export default LatestCountries;

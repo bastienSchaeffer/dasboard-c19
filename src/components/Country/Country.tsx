@@ -69,4 +69,4 @@ const Country = () => {
   );
 };
 
-export default React.memo(Country);
+export default Country;

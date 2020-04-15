@@ -33,4 +33,4 @@ const Countries = () => {
   );
 };
 
-export default React.memo(Countries);
+export default Countries;
