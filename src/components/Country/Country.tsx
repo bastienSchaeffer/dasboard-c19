@@ -20,7 +20,7 @@ const Country = () => {
   const {GraphColorsKey} = useGraphColors();
 
   useEffect(() => {
-    fetch('/timeline')
+    fetch(`/timeline/${selectedCountryCode}`)
       .then((response) => response.json())
       .then((response) => setTimeline(response));
   }, []);
@@ -43,7 +43,7 @@ const Country = () => {
           <CardContent>
             <LineChart
               dataSet={timeline}
-              countryCode={selectedCountryCode}
+              // countryCode={selectedCountryCode}
               daysSelected={daysSelected}
               config={[{key: 'confirmed', color: GraphColorsKey.primary}]}
             />
@@ -57,7 +57,7 @@ const Country = () => {
           <CardContent>
             <BarChart
               dataSet={timeline}
-              countryCode={selectedCountryCode}
+              // countryCode={selectedCountryCode}
               daysSelected={daysSelected}
               config={[
                 {key: 'deaths', color: GraphColorsKey.primary},

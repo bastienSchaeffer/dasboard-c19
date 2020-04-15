@@ -16,26 +16,24 @@ type Config = {
 };
 type LineChartProps = {
   dataSet: any;
-  countryCode: string;
   daysSelected: number[];
   config: Config[];
 };
 
 const LineChart: React.FC<LineChartProps> = ({
   dataSet,
-  countryCode,
   daysSelected,
   config,
 }) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    let data = dataSet[countryCode];
+    let data = dataSet;
     if (data && data.length) {
       data = data.slice(daysSelected[0], daysSelected[1]);
     }
     setChartData(data);
-  }, [dataSet, countryCode, daysSelected]);
+  }, [dataSet, daysSelected]);
 
   return (
     <ResponsiveContainer width='100%' height={360} debounce={0}>

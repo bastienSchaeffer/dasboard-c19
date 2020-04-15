@@ -17,26 +17,21 @@ type Config = {
 
 type BarChartProps = {
   dataSet: any;
-  countryCode: string;
+  // countryCode: string;
   daysSelected: number[];
   config: Config[];
 };
 
-const BarChart: React.FC<BarChartProps> = ({
-  dataSet,
-  countryCode,
-  daysSelected,
-  config,
-}) => {
+const BarChart: React.FC<BarChartProps> = ({dataSet, daysSelected, config}) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    let data = dataSet[countryCode];
+    let data = dataSet;
     if (data && data.length) {
       data = data.slice(daysSelected[0], daysSelected[1]);
     }
     setChartData(data);
-  }, [dataSet, countryCode, daysSelected]);
+  }, [dataSet, daysSelected]);
 
   return (
     <ResponsiveContainer width='100%' height={360} debounce={0}>

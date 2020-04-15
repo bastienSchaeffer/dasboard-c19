@@ -64,6 +64,24 @@ export default (app: Application) => {
     });
   });
 
+  app.get('/timeline/:country', async function (req, res) {
+    return clientRedis.get('timeline', (err: Errback, result: string) => {
+      if (err) throw err;
+      // If that key exist in Redis store
+      if (result) {
+        let countries = JSON.parse(result);
+        let country = countries[req.params.country];
+        if (!country) {
+          res.send('false');
+          return;
+        }
+        return res.status(200).json(country);
+      } else {
+        res.status(500);
+      }
+    });
+  });
+
   app.get('/health', (_req: Request, res: Response, _next: NextFunction) => {
     return clientRedis.get('health', (err: Errback, result: string) => {
       if (err) throw err;
