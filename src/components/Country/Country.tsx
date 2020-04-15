@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Grid,
   Card as CardMUI,
@@ -15,17 +15,18 @@ import {HeaderSection} from '../Header';
 
 const Country = () => {
   const [selectedCountry] = useState('USA');
-  const [selectedCountryCode] = useState('US');
+  // const [selectedCountryCode] = useState('US');
   const [daysSelected] = React.useState<number[]>([20, 37]);
-  const [timeline, setTimeline] = useState({});
+  // const [timeline, setTimeline] = useState({});
   const {GraphColorsKey} = useGraphColors();
 
-  useEffect(() => {
-    fetch(`/timeline/${selectedCountryCode}`)
-      .then((response) => response.json())
-      .then((response) => setTimeline(response));
-  }, []);
+  // useEffect(() => {
+  //   fetch(`/timeline/${selectedCountryCode}`)
+  //     .then((response) => response.json())
+  //     .then((response) => setTimeline(response));
+  // }, []);
 
+  console.log('Country');
   return (
     <Grid container spacing={4}>
       <Grid item xs={12}>
@@ -43,7 +44,7 @@ const Country = () => {
           <Divider />
           <CardContent>
             <LineChart
-              dataSet={timeline}
+              dataSet={[]}
               // countryCode={selectedCountryCode}
               daysSelected={daysSelected}
               config={[{key: 'confirmed', color: GraphColorsKey.primary}]}
