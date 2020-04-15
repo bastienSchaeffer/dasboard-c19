@@ -16,7 +16,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import Global from '../components/Global';
 import Continents from '../components/Continents';
 import Countries from '../components/Countries';
-// import Country from '../components/Country';
+import Country from '../components/Country';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,7 +56,7 @@ const IndexPage: React.FC = () => {
                 <Countries />
               </Grid>
               <Grid item xs={12}>
-                {/* <Country /> */}
+                <Country />
               </Grid>
             </>
           </ErrorBoundary>

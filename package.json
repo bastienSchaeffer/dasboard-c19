@@ -23,6 +23,7 @@
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
+    "framer-motion": "^1.10.3",
     "next": "^9.3.4",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",

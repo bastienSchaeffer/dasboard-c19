@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Grid,
   Card as CardMUI,
@@ -7,26 +7,24 @@ import {
   CardContent,
 } from '@material-ui/core';
 
-// import {LineChart, BarChart} from '../Charts';
-import {LineChart} from '../Charts';
-// import DiscreteSlider from '../Slider/Slider';
+import {LineChart, BarChart} from '../Charts';
+import DiscreteSlider from '../Slider/Slider';
 import useGraphColors from '../Charts/useGraphColors';
 import {HeaderSection} from '../Header';
 
 const Country = () => {
   const [selectedCountry] = useState('USA');
-  // const [selectedCountryCode] = useState('US');
-  const [daysSelected] = React.useState<number[]>([20, 37]);
-  // const [timeline, setTimeline] = useState({});
+  const [selectedCountryCode] = useState('US');
+  const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
+  const [timeline, setTimeline] = useState({});
   const {GraphColorsKey} = useGraphColors();
 
-  // useEffect(() => {
-  //   fetch(`/timeline/${selectedCountryCode}`)
-  //     .then((response) => response.json())
-  //     .then((response) => setTimeline(response));
-  // }, []);
+  useEffect(() => {
+    fetch(`/timeline/${selectedCountryCode}`)
+      .then((response) => response.json())
+      .then((response) => setTimeline(response));
+  }, []);
 
-  console.log('Country');
   return (
     <Grid container spacing={4}>
       <Grid item xs={12}>
@@ -35,31 +33,29 @@ const Country = () => {
           caption={`Country data with range of days`}
         />
       </Grid>
-      {/* <Grid item xs={12}>
+      <Grid item xs={12}>
         <DiscreteSlider steps={81} setDaysSelected={setDaysSelected} />
-      </Grid> */}
-      <Grid item lg={12} md={12} xl={12} xs={12}>
+      </Grid>
+      <Grid item lg={6} md={6} xl={12} xs={12}>
         <CardMUI>
           <CardHeader title='Total Cases Evolution' />
           <Divider />
           <CardContent>
             <LineChart
-              dataSet={[]}
-              // countryCode={selectedCountryCode}
+              dataSet={timeline}
               daysSelected={daysSelected}
               config={[{key: 'confirmed', color: GraphColorsKey.primary}]}
             />
           </CardContent>
         </CardMUI>
       </Grid>
-      {/* <Grid item lg={6} md={6} xl={12} xs={12}>
+      <Grid item lg={6} md={6} xl={12} xs={12}>
         <CardMUI>
           <CardHeader title='Total Deaths And Recovery Evolution' />
           <Divider />
           <CardContent>
             <BarChart
               dataSet={timeline}
-              // countryCode={selectedCountryCode}
               daysSelected={daysSelected}
               config={[
                 {key: 'deaths', color: GraphColorsKey.primary},
@@ -68,9 +64,9 @@ const Country = () => {
             />
           </CardContent>
         </CardMUI>
-      </Grid> */}
+      </Grid>
     </Grid>
   );
 };
 
-export default Country;
+export default React.memo(Country);

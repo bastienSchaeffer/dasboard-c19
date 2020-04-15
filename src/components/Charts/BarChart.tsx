@@ -17,7 +17,6 @@ type Config = {
 
 type BarChartProps = {
   dataSet: any;
-  // countryCode: string;
   daysSelected: number[];
   config: Config[];
 };
