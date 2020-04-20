@@ -11,19 +11,20 @@ import {LineChart, BarChart} from '../Charts';
 import DiscreteSlider from '../Slider/Slider';
 import useGraphColors from '../Charts/useGraphColors';
 import {HeaderSection} from '../Header';
+import CountrySelect from '../select';
 
 const Country = () => {
-  const [selectedCountry] = useState('USA');
-  const [selectedCountryCode] = useState('US');
+  const [selectedCountry, setSelectedCountry] = useState('USA');
+  const [selectedCountryCode, setSelectedCountryCode] = useState('US');
   const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
-  const [timeline, setTimeline] = useState({});
+  const [timeline, setTimeline] = useState([]);
   const {GraphColorsKey} = useGraphColors();
 
   useEffect(() => {
     fetch(`/timeline/${selectedCountryCode}`)
       .then((response) => response.json())
       .then((response) => setTimeline(response));
-  }, []);
+  }, [selectedCountryCode]);
 
   return (
     <Grid container spacing={4}>
@@ -33,7 +34,13 @@ const Country = () => {
           caption={`Country data with range of days`}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={4}>
+        <CountrySelect
+          setSelectedCountryCode={setSelectedCountryCode}
+          setSelectedCountry={setSelectedCountry}
+        />
+      </Grid>
+      <Grid item xs={8}>
         <DiscreteSlider steps={81} setDaysSelected={setDaysSelected} />
       </Grid>
       <Grid item lg={6} md={6} xl={12} xs={12}>
