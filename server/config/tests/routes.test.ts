@@ -1,16 +1,6 @@
 const request = require('supertest');
 import {server} from '../../';
 
-describe('GET /url', () => {
-  it('responds with json', (done) => {
-    request(server)
-      .get('/url')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-});
-
 describe('GET /world', () => {
   it('responds with json', (done) => {
     request(server)

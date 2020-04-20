@@ -14,8 +14,8 @@ import {Continent} from '../types';
  * Get the world covid data
  */
 const getWorld = async () => {
-  const data = await getWDMCovidWorld();
-  clientRedis.set('world', JSON.stringify(data[0]));
+  const [dataWorld] = await getWDMCovidWorld();
+  clientRedis.set('world', JSON.stringify(dataWorld));
 };
 
 /*
@@ -33,7 +33,7 @@ const getContinents = async () => {
 /*
  * Get the population/flags data
  */
-const getCountriesDetails = async () => {
+const getCountriesDetails = () => {
   return axios
     .get('https://restcountries.eu/rest/v2/all')
     .then((response) => response.data);
@@ -42,14 +42,14 @@ const getCountriesDetails = async () => {
 /*
  * Get the countries covid data
  */
-const getCountriesCovid = async () => {
+const getCountriesCovid = () => {
   return getWDMCovidCountries();
 };
 
 /*
  * Get the world population
  */
-const getPopulation = async () => {
+const getPopulation = () => {
   return getWDMPopulation();
 };
 

@@ -2,19 +2,11 @@ import {Application, Request, Response, NextFunction, Errback} from 'express';
 import clientRedis from './redis';
 
 export default (app: Application) => {
-  app.get('/url', (_req: Request, res: Response) => {
-    res.json({
-      origin: 'express',
-      date: new Date(),
-    });
-  });
-
   // -------------------------------
   // Retrieved from API on REDIS
   // -------------------------------
-
   app.get('/world', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('world', (err: Errback, result: string) => {
+    clientRedis.get('world', (err: Errback, result: string) => {
       if (err) throw err;
       // If that key exist in Redis store
       if (result) {
@@ -28,7 +20,7 @@ export default (app: Application) => {
   app.get(
     '/continents',
     (_req: Request, res: Response, _next: NextFunction) => {
-      return clientRedis.get('continents', (err: Errback, result: string) => {
+      clientRedis.get('continents', (err: Errback, result: string) => {
         if (err) throw err;
         // If that key exist in Redis store
         if (result) {
@@ -41,7 +33,7 @@ export default (app: Application) => {
   );
 
   app.get('/countries', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('countries', (err: Errback, result: string) => {
+    clientRedis.get('countries', (err: Errback, result: string) => {
       if (err) throw err;
       // If that key exist in Redis store
       if (result) {
@@ -53,7 +45,7 @@ export default (app: Application) => {
   });
 
   app.get('/timeline', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('timeline', (err: Errback, result: string) => {
+    clientRedis.get('timeline', (err: Errback, result: string) => {
       if (err) throw err;
       // If that key exist in Redis store
       if (result) {
@@ -65,7 +57,7 @@ export default (app: Application) => {
   });
 
   app.get('/timeline/:country', async function (req, res) {
-    return clientRedis.get('timeline', (err: Errback, result: string) => {
+    clientRedis.get('timeline', (err: Errback, result: string) => {
       if (err) throw err;
       // If that key exist in Redis store
       if (result) {
@@ -83,7 +75,7 @@ export default (app: Application) => {
   });
 
   app.get('/health', (_req: Request, res: Response, _next: NextFunction) => {
-    return clientRedis.get('health', (err: Errback, result: string) => {
+    clientRedis.get('health', (err: Errback, result: string) => {
       if (err) throw err;
 
       if (result) {

@@ -5,8 +5,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    width: '90%',
+    width: '100%',
     margin: '0 auto',
+    padding: '20px 0 0',
   },
   customTooltip: {
     fontSize: '1em',
@@ -58,7 +59,7 @@ export default function DiscreteSlider({steps, setDaysSelected}: any) {
   return (
     <div className={classes.root}>
       <Slider
-        defaultValue={[20, 37]}
+        defaultValue={[Math.round(steps / 2), steps]}
         onChangeCommitted={handleChangeAuto}
         getAriaValueText={valuetext}
         valueLabelFormat={valuetext}

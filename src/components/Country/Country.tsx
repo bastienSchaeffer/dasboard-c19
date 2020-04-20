@@ -16,7 +16,7 @@ import CountrySelect from '../select';
 const Country = () => {
   const [selectedCountry, setSelectedCountry] = useState('USA');
   const [selectedCountryCode, setSelectedCountryCode] = useState('US');
-  const [daysSelected, setDaysSelected] = React.useState<number[]>([20, 37]);
+  const [daysSelected, setDaysSelected] = React.useState<number[]>([50, 1000]);
   const [timeline, setTimeline] = useState([]);
   const {GraphColorsKey} = useGraphColors();
 
@@ -41,20 +41,27 @@ const Country = () => {
         />
       </Grid>
       <Grid item xs={8}>
-        <DiscreteSlider steps={81} setDaysSelected={setDaysSelected} />
+        {timeline.length && (
+          <DiscreteSlider
+            steps={timeline.length}
+            setDaysSelected={setDaysSelected}
+          />
+        )}
       </Grid>
       <Grid item lg={6} md={6} xl={12} xs={12}>
-        <CardMUI>
-          <CardHeader title='Total Cases Evolution' />
-          <Divider />
-          <CardContent>
-            <LineChart
-              dataSet={timeline}
-              daysSelected={daysSelected}
-              config={[{key: 'confirmed', color: GraphColorsKey.primary}]}
-            />
-          </CardContent>
-        </CardMUI>
+        {timeline.length && (
+          <CardMUI>
+            <CardHeader title='Total Cases Evolution' />
+            <Divider />
+            <CardContent>
+              <LineChart
+                dataSet={timeline}
+                daysSelected={daysSelected}
+                config={[{key: 'confirmed', color: GraphColorsKey.primary}]}
+              />
+            </CardContent>
+          </CardMUI>
+        )}
       </Grid>
       <Grid item lg={6} md={6} xl={12} xs={12}>
         <CardMUI>
