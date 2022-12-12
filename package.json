@@ -22,7 +22,7 @@
     "@material-ui/styles": "^4.9.6",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "next": "^9.3.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
